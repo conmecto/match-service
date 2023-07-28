@@ -1,38 +1,29 @@
 import express, { Express, urlencoded, json } from 'express';
 import { createServer } from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
-import { parse } from 'url';
 import { Environments, constants } from './utils';
 import router from './routes';
+import { errorHandler } from './middlewares/errorHandling';
 
 const app: Express = express();
 
 app.use(json());
-app.use(urlencoded());
-app.use('/api/v1', router);
+app.use(urlencoded({ extended: false }));
+app.use('/v1', router, errorHandler);
 
-const server = createServer(app);
-const webSocketServer = new WebSocketServer({ server, maxPayload: constants.SOCKET_MAX_PAYLOAD });
+const server = createServer(app)
 
-//add webSocketServer on events to a different file
+const webSocketServer = new WebSocketServer({ server, maxPayload: constants.SOCKET_MAX_PAYLOAD, path: '/v1/socket-server' });
+
 webSocketServer.on('connection', (ws: WebSocket) => {
+    console.log(`Socket server is listening`);
     ws.on('error', (err) => { console.error(err) }) ;
-    ws.on('message', (data) => { console.log(data) });
+    ws.on('message', (data) => { console.log(data.toString()) });
     ws.send('Hello');
 });
+
 webSocketServer.on('error', (err) => {
     console.error(err);
-});
-
-server.on('upgrade', (req, socket, head) => {
-    const { pathname } = parse(req.url? req.url : '');
-    if (pathname === '/api/v1/match/connection') {
-        webSocketServer.handleUpgrade(req, socket, head, (ws: WebSocket) => {
-            webSocketServer.emit('connection', ws, req);
-        });
-    } else {
-        socket.destroy();
-    }
 });
 
 server.listen(Environments.server.port, 

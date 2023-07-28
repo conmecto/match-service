@@ -9,7 +9,12 @@ if (process.env.NODE_ENV === 'dev') {
 export default {
     env: process.env.NODE_ENV || 'dev',
     server: {
+        host: process.env.HOST || 'localhost',
         port: process.env.PORT || 8082
+    },
+    socketServer: {
+        host: process.env.SOCKET_HOST || 'localhost',
+        port: process.env.SOCKET_PORT || 8083
     },
     database: {
         host: process.env.DB_HOST || 'localhost',
@@ -36,10 +41,14 @@ export default {
         username: process.env.REDIS_USERNAME || 'REDIS_USERNAME',
         password: process.env.REDIS_PASSWORD || 'REDIS_PASSWORD',
         channels: {
+            processMatchQueue: process.env.REDIS_CHANNEL_PROCESS_MATCH_QUEUE || 'process-match-queue',
             userCreatedMatch: process.env.REDIS_CHANNEL_USER_CREATED_MATCH || 'user-created-match',
             userCreatedMatchError: process.env.REDIS_CHANNEL_USER_CREATED_MATCH_ERROR || 'user-created-match-error',
         },
-        connectTimeout: Number(process.env.REDIS_CONNECT_TIMEOUT) || 30000
+        matchQueue: process.env.MATCH_QUEUE || 'match-queue-',
+        connectTimeout: Number(process.env.REDIS_CONNECT_TIMEOUT) || 30000,
+        maxNumberOfMatchQueue: Number(process.env.REDIS_MAX_NUMBER_OF_MATCH_QUEUE) || 10,
+        matchQueueItemLimit: Number(process.env.REDIS_MATCH_QUEUE_ITEM_LIMIT) || 100000
     },
     email: process.env.email || 'temp email'
 };

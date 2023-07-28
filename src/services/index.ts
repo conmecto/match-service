@@ -3,5 +3,5 @@ import { handleAddSettingsMessage } from './handleMessage';
 
 export {
     CustomError,
-    handleAddSettingsMessage
+    handleAddSettingsMessage,
 }

@@ -1,6 +1,7 @@
 import { redisClient1 as pubClient, redisClient2 as subClient } from '../config';
 import { Environments, helpers, enums } from '../utils';
 import addSetting from './addSetting';
+import addUserInMatchQueue from './addUserInMatchQueue';
 
 export const handleAddSettingsMessage = async (message: any, channel: string) => {
     try {
@@ -14,9 +15,11 @@ export const handleAddSettingsMessage = async (message: any, channel: string) =>
             if (!res) {
                 throw new Error();
             }
+            await addUserInMatchQueue(userId);
+            await pubClient.publish(Environments.redis.channels.processMatchQueue, enums.Messages.MATCH_QUEUE_UPDATED);
         }
-    } catch(err) {
-        console.log(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + err);
+    } catch(error) {
+        console.log(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + error);
         await pubClient.publish(Environments.redis.channels.userCreatedMatchError, message);
     }
 }
