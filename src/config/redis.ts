@@ -1,6 +1,6 @@
 import { createClient } from 'redis';
 import { Environments, enums } from '../utils';
-import { handleAddSettingsMessage } from '../services'
+import { handleAddSettingsMessage, handleMatchCreatedMessage } from '../services'
 
 const redisClient1 = createClient({
     socket: {
@@ -32,6 +32,7 @@ const redisClient2 = createClient({
     console.log(enums.PrefixesForLogs.REDIS_CONNECTION_READY_CLIENT2 + redisClient2.isReady);
     if (redisClient2.isReady) {
         await redisClient2.subscribe(Environments.redis.channels.userCreatedMatch, handleAddSettingsMessage);
+        await redisClient2.subscribe(Environments.redis.channels.matchCreated, handleMatchCreatedMessage);
     }
 })();
 

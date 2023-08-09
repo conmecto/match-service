@@ -19,7 +19,7 @@ const getMinSizeQueueIndex = async () => {
 const addUserInMatchQueue = async (userId: number) => {
     try {
         const minSizeQueueIndex = await getMinSizeQueueIndex();
-        const res = await cacheClient.lPush(Environments.redis.matchQueue + `${minSizeQueueIndex}`, `${userId}`);
+        const res = await cacheClient.lPush(Environments.redis.matchQueue + minSizeQueueIndex, userId?.toString());
         if (res) {
             await updateUserCurrentQueue(userId, minSizeQueueIndex);
         }

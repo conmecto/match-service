@@ -41,6 +41,8 @@ interface ICreateSettingObject {
     searchFor: string,
     searchIn: string,
     gender: string,
+    minSearchAge: number,
+    maxSearchAge: number
 }
 
 export { 
