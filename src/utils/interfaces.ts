@@ -45,6 +45,15 @@ interface ICreateSettingObject {
     maxSearchAge: number
 }
 
+//Match
+interface IGetMatchObj {
+    id: number,
+    userId1: number,
+    userId2: number,
+    streak: number,
+    createdAt: Date
+}
+
 export { 
-    IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject
+    IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj
 };

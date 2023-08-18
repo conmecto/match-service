@@ -34,6 +34,8 @@ export enum Errors {
     CITY_NOT_FOUND = 'City not found',
     USER_NOT_FOUND = 'User not found',
 
+    USER_MATCH_SETTING_NOT_FOUND = 'User match settings not found',
+
     INTERNAL_SERVER = 'Internal server error',
 }
 
@@ -42,6 +44,8 @@ export enum ErrorCodes {
     FORBIDDEN = 'FORBIDDEN',
 
     VALIDATION_ERROR = 'VALIDATION_ERROR',
+
+    SETTING_NOT_FOUND = 'SETTING_NOT_FOUND',
 
     INTERNAL_SERVER = 'INTERNAL_SERVER',
 }
@@ -64,7 +68,9 @@ export enum PrefixesForLogs {
     DB_CONNECTION_FAILED = 'DB connection failed: ',
     DB_ADD_SETTING_ERROR = 'DB add setting error: ',
     DB_UPDATE_USER_CURRENT_QUEUE_ERROR = 'DB update user current queue error: ',
-
+    DB_CHECK_SETTING_ERROR = 'DB check user setting error: ',
+    DB_GET_SETTING_ERROR = 'DB get user match setting error: ',
+    DB_GET_CURRENT_MATCH_ERROR = 'DB get user current match error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: '
 }
