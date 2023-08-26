@@ -50,7 +50,7 @@ interface IGetMatchObj {
     id: number,
     userId1: number,
     userId2: number,
-    streak: number,
+    score: number,
     createdAt: Date
 }
 
