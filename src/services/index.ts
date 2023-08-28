@@ -4,6 +4,7 @@ import handleMatchCreatedMessage from './handleMatchCreatedMessage';
 import getUserLatestMatch from './getUserLatestMatch';
 import * as cacheClient from './cache';
 import checkUserSetting from './checkUserSetting';
+import getMatchById from './getMatchById';
 
 export {
     CustomError,
@@ -11,5 +12,6 @@ export {
     handleMatchCreatedMessage,
     getUserLatestMatch,
     cacheClient,
-    checkUserSetting
+    checkUserSetting,
+    getMatchById
 }

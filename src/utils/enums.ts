@@ -62,7 +62,8 @@ export enum PrefixesForLogs {
     REDIS_SUBSCRIBE_CHANNEL_ERROR = 'Redis subscribe channel error: ',
     REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR = 'Redis channel message receive error: ',
     REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR = 'Redis add user in match queue error: ',
-    REDIS_PROCESS_MATCH_QUEUE_ERROR = 'Redis process match queue error',
+    REDIS_PROCESS_MATCH_QUEUE_ERROR = 'Redis process match queue error: ',
+    REDIS_HANDLE_MATCH_CREATED_ERROR = 'Redis handle match created error: ',
 
     DB_CONNECTED = 'DB connection successful: ',
     DB_CONNECTION_FAILED = 'DB connection failed: ',
@@ -71,10 +72,16 @@ export enum PrefixesForLogs {
     DB_CHECK_SETTING_ERROR = 'DB check user setting error: ',
     DB_GET_SETTING_ERROR = 'DB get user match setting error: ',
     DB_GET_CURRENT_MATCH_ERROR = 'DB get user current match error: ',
+    DB_GET_MATCH_ERROR = 'DB get match error: ',
+    DB_CREATE_CHAT_ROOM_ERROR = 'DB create chat room error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: '
 }
 
 export enum Messages {
     MATCH_QUEUE_UPDATED = 'Match queue updated',
+}
+
+export enum SocketEvents {
+    MATCH_CREATED = 'match-created'
 }

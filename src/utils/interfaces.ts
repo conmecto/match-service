@@ -54,6 +54,13 @@ interface IGetMatchObj {
     createdAt: Date
 }
 
+//Chat Room 
+interface ICreateChatRoomObj {
+    matchId: number,
+    userId1: number,
+    userId2: number
+}
+
 export { 
-    IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj
+    IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj
 };
