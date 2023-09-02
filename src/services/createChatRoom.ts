@@ -3,7 +3,7 @@ import { getDbClient } from '../config';
 import { interfaces, enums } from '../utils';
 
 const createChatRoom = async (createChatRoomObj: interfaces.ICreateChatRoomObj) => {
-    const query = 'INSERT INTO char_room(match_id, user_id_1, user_id_2) VALUES ($1, $2, $3)';
+    const query = 'INSERT INTO chat_room(match_id, user_id_1, user_id_2) VALUES ($1, $2, $3)';
     const { matchId, userId1, userId2 } = createChatRoomObj;
     const params = [matchId, userId1, userId2];
     let res: QueryResult | null = null;

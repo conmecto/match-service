@@ -4,7 +4,7 @@ import { getDbClient } from '../config';
 import { interfaces, enums } from '../utils';
 
 const getMatchById = async (matchId: number): Promise<interfaces.IGetMatchObj | null> => {
-    const query = 'SELECT id, user_id_1, user_id_2, score, created_at FROM match WHERE match_id=$1';
+    const query = 'SELECT id, user_id_1, user_id_2, score, created_at FROM match WHERE id=$1';
     const params = [matchId];
     let res: QueryResult | null = null;
     const client = await getDbClient();
