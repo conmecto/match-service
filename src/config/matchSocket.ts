@@ -45,7 +45,7 @@ const createMatchSocket = async (server: Server) => {
         console.error('Socket server error', err);
         matchSocketClients.clear();
     });
-    console.log(webSocketServer.clients);
+    console.log('webSocketServer.clients', webSocketServer.clients);
 }
 
 export { createMatchSocket, matchSocketClients }
