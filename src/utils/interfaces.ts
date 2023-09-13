@@ -51,7 +51,9 @@ interface IGetMatchObj {
     userId1: number,
     userId2: number,
     score: number,
-    createdAt: Date
+    createdAt: Date,
+    city?: string,
+    country?: string,
 }
 
 //Chat Room 

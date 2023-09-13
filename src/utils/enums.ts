@@ -74,6 +74,7 @@ export enum PrefixesForLogs {
     DB_GET_CURRENT_MATCH_ERROR = 'DB get user current match error: ',
     DB_GET_MATCH_ERROR = 'DB get match error: ',
     DB_CREATE_CHAT_ROOM_ERROR = 'DB create chat room error: ',
+    DB_GET_TOP_MATCHES_ERROR = 'DB get top matches error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: '
 }
