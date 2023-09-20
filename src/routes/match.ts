@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
-import { getUserMatch, getTopMatches, getUserSettings, updateUserSettings } from '../controllers';
+import { getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches } from '../controllers';
 
 const matchRouter = Router();
 
@@ -44,5 +44,14 @@ matchRouter.get('/top', async (req: Request, res: Response, next: NextFunction) 
     }
 });
 
+matchRouter.get('/past', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await getPastMatches(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
 
 export default matchRouter;

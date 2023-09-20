@@ -10,6 +10,11 @@ const topMatchesQuerySchema = Joi.object({
     country: Joi.number().valid(...Object.values(Country)).required().default(Country.INDIA)
 });
 
+const pastMatchesQuerySchema = Joi.object({
+    count: Joi.number().optional().default(10),
+    userId: Joi.number().required()
+});
+
 const paramsUserMatchSettingSchema = Joi.object({
     userId: Joi.number().required()
 });
@@ -21,4 +26,7 @@ const updateUserMatchSettingSchema = Joi.object({
     searchIn: Joi.string().optional()
 });
 
-export { paramsUserIdSchema, topMatchesQuerySchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema };
+export { 
+    paramsUserIdSchema, topMatchesQuerySchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
+    pastMatchesQuerySchema 
+};

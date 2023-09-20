@@ -9,6 +9,7 @@ import findTopMatches from './findTopMatches';
 import getUserMatchSetting from './getUserMatchSetting';
 import updateMatchSettings from './updateMatchSettings';
 import addUserInMatchQueue from './addUserInMatchQueue';
+import pastMatches from './pastMatches';
 
 export {
     CustomError,
@@ -21,5 +22,6 @@ export {
     findTopMatches,
     getUserMatchSetting,
     updateMatchSettings,
-    addUserInMatchQueue
+    addUserInMatchQueue,
+    pastMatches
 }
