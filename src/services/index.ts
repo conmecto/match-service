@@ -6,6 +6,9 @@ import * as cacheClient from './cache';
 import checkUserSetting from './checkUserSetting';
 import getMatchById from './getMatchById';
 import findTopMatches from './findTopMatches';
+import getUserMatchSetting from './getUserMatchSetting';
+import updateMatchSettings from './updateMatchSettings';
+import addUserInMatchQueue from './addUserInMatchQueue';
 
 export {
     CustomError,
@@ -15,5 +18,8 @@ export {
     cacheClient,
     checkUserSetting,
     getMatchById,
-    findTopMatches
+    findTopMatches,
+    getUserMatchSetting,
+    updateMatchSettings,
+    addUserInMatchQueue
 }

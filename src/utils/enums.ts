@@ -8,7 +8,7 @@ export enum Gender {
     NON_BINARY = 'nonbinary'
 }
 
-export enum Search {
+export enum SearchFor {
     MEN = 'men',
     WOMEN = 'women',
     EVERYONE = 'everyone'
@@ -36,6 +36,8 @@ export enum Errors {
 
     USER_MATCH_SETTING_NOT_FOUND = 'User match settings not found',
 
+    INVALID_AGE_LIMIT_SETTING = 'Invalid age limit for settings',
+
     INTERNAL_SERVER = 'Internal server error',
 }
 
@@ -46,6 +48,8 @@ export enum ErrorCodes {
     VALIDATION_ERROR = 'VALIDATION_ERROR',
 
     SETTING_NOT_FOUND = 'SETTING_NOT_FOUND',
+
+    INVALID_AGE_LIMIT_SETTING = 'INVALID_AGE_LIMIT_SETTING',
 
     INTERNAL_SERVER = 'INTERNAL_SERVER',
 }
@@ -75,6 +79,7 @@ export enum PrefixesForLogs {
     DB_GET_MATCH_ERROR = 'DB get match error: ',
     DB_CREATE_CHAT_ROOM_ERROR = 'DB create chat room error: ',
     DB_GET_TOP_MATCHES_ERROR = 'DB get top matches error: ',
+    DB_UPDATE_MATCH_SETTINGS_ERROR = 'DB update match settings error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: '
 }
@@ -85,4 +90,26 @@ export enum Messages {
 
 export enum SocketEvents {
     MATCH_CREATED = 'match-created'
+}
+
+export enum SettingFieldsDbName {
+    'id' = 'id',
+    'userId' = 'user_id',
+    'user_id' = 'userId',
+    'searchFor' = 'search_for',
+    'search_for' = 'searchFor',
+    'searchIn' = 'search_in',
+    'search_in' = 'searchIn',
+    'minSearchAge' = 'min_search_age',
+    'min_search_age' = 'minSearchAge',
+    'maxSearchAge' = 'max_search_age',
+    'max_search_age' = 'maxSearchAge',
+    'createdAt' = 'created_at',
+    'created_at' = 'createdAt',
+    'updatedAt' = 'updated_at',
+    'updated_at' = 'updatedAt',
+    'currentQueue' = 'current_queue',
+    'current_queue' = 'currentQueue',
+    'isMatched' = 'is_matched',
+    'is_matched' = 'isMatched'
 }

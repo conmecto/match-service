@@ -3,7 +3,7 @@ import { QueryResult } from 'pg';
 import { interfaces, enums } from '../utils';
 
 const updateUserCurrentQueue = async (userId: number, currentQueue: number) => {
-	const query = 'UPDATE setting SET current_queue=$1 where user_id=$2';
+	const query = 'UPDATE setting SET current_queue=$1 WHERE user_id=$2';
     const params = [currentQueue, userId];
     let res: QueryResult | null = null;
     const client = await getDbClient();

@@ -45,6 +45,21 @@ interface ICreateSettingObject {
     maxSearchAge: number
 }
 
+interface IGetSettingObject {
+    id: number,
+    userId: number,
+    age?: number,
+    city?: string,
+    country?: string, 
+    searchFor: string,
+    searchIn: string,
+    gender?: string,
+    minSearchAge: number,
+    maxSearchAge: number,
+    currentQueue?: number,
+    isMatched?: boolean
+}
+
 //Match
 interface IGetMatchObj {
     id: number,
@@ -63,6 +78,14 @@ interface ICreateChatRoomObj {
     userId2: number
 }
 
+interface IUpdateSettingObj {
+    minSearchAge?: number,
+    maxSearchAge?: number,
+    searchFor?: string,
+    searchIn?: string, 
+}
+
 export { 
-    IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj
+    IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
+    IGetSettingObject, IUpdateSettingObj
 };
