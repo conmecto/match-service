@@ -11,7 +11,7 @@ export const handleAddSettingsMessage = async (message: any, channel: string) =>
         const checkFields = dob && userId && city && country && searchIn && searchFor;
         if (checkChannel && checkFields) {
             const age = helpers.getAge(dob);
-            const insertDoc = { age, city, country, gender, maxSearchAge: age + 1, minSearchAge: age + (age > 18 ? -1 : 0), searchFor, searchIn, userId };
+            const insertDoc = { age, city, country, gender, maxSearchAge: age + (age < 70 ? 1 : 0), minSearchAge: age + (age > 18 ? -1 : 0), searchFor, searchIn, userId };
             const res = await addSetting(insertDoc);
             if (!res) {
                 throw new Error();
