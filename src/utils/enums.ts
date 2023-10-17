@@ -80,6 +80,7 @@ export enum PrefixesForLogs {
     DB_CREATE_CHAT_ROOM_ERROR = 'DB create chat room error: ',
     DB_GET_TOP_MATCHES_ERROR = 'DB get top matches error: ',
     DB_UPDATE_MATCH_SETTINGS_ERROR = 'DB update match settings error: ',
+    DB_GET_USER_CHATS_ERROR = 'DB get user chats error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: '
 }
@@ -112,4 +113,10 @@ export enum SettingFieldsDbName {
     'current_queue' = 'currentQueue',
     'isMatched' = 'is_matched',
     'is_matched' = 'isMatched'
+}
+
+export enum ChatSocketEvents {
+    SAVE_MESSAGE = 'save-message',
+    MARK_MESSAGES_AS_READ = 'mark-messages-as-read',
+    MESSAGE_RECEIVED = 'message-received'
 }

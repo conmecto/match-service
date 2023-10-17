@@ -85,7 +85,29 @@ interface IUpdateSettingObj {
     searchIn?: string, 
 }
 
+interface IChatsResponse {
+    id: number,
+    sender: number,
+    receiver: number,
+    matchId: number,
+    type: string,
+    message: string,
+    location?: string,
+    fileMetadataId?: number,
+    seen: boolean,
+    seenAt?: Date,
+    createdAt: Date,
+    deletedAt: Date
+}
+
+interface IGetChatsPayload{
+    matchId: number,
+    userId: number,
+    page: number,
+    perPage: number,
+}
+  
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
-    IGetSettingObject, IUpdateSettingObj
+    IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload
 };

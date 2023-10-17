@@ -10,6 +10,7 @@ import getUserMatchSetting from './getUserMatchSetting';
 import updateMatchSettings from './updateMatchSettings';
 import addUserInMatchQueue from './addUserInMatchQueue';
 import pastMatches from './pastMatches';
+import getChats from './getChats';
 
 export {
     CustomError,
@@ -23,5 +24,6 @@ export {
     getUserMatchSetting,
     updateMatchSettings,
     addUserInMatchQueue,
-    pastMatches
+    pastMatches,
+    getChats
 }

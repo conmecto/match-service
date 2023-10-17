@@ -1,6 +1,8 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
-import { getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches } from '../controllers';
+import { 
+    getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats 
+} from '../controllers';
 
 const matchRouter = Router();
 
@@ -48,6 +50,16 @@ matchRouter.get('/past', async (req: Request, res: Response, next: NextFunction)
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getPastMatches(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
+matchRouter.get('/:matchId/chats', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await getUserChats(filterRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);
