@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import { interfaces, validationSchema, enums } from '../utils';
 import { CustomError, updateMatchSettings, addUserInMatchQueue } from '../services';
 
@@ -30,7 +31,7 @@ const updateUserSettings = async (req: interfaces.IRequestObject): Promise<inter
     if (!userSettings.isMatched && !userSettings.currentQueue) {
         await addUserInMatchQueue(userSettings.userId);
     }
-    return userSettings;
+    return omit(userSettings, ['currentQueue']);
 }
 
 export default updateUserSettings;

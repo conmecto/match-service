@@ -31,7 +31,6 @@ const updateMatchSettings = async (userId: number, updateObj: interfaces.IUpdate
         client.release();
     }
     if (res.rows.length) {
-        console.log(res.rows[0])
         const settingObj: Record<string, any> = {};
         for(const key in res.rows[0]) {
             settingObj[enums.SettingFieldsDbName[key]] = res.rows[0][key];
