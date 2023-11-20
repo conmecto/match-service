@@ -4,7 +4,6 @@ import { getUserLatestMatch, CustomError, cacheClient, checkUserSetting } from '
 const getUserMatch = async (req: interfaces.IRequestObject): Promise<interfaces.IGetMatchObj | undefined> => {
     await validationSchema.paramsUserIdSchema.validateAsync(req.params);
     const userId = Number(req.params['id']);
-
     let checkUserId: string | null | boolean = await cacheClient.getKey(constants.CHECK_USER_MATCHED_KEY + userId);
     if (!checkUserId) {
         checkUserId = await checkUserSetting(userId);

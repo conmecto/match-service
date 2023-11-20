@@ -36,7 +36,12 @@ const queryParamsUserChatsSchema = Joi.object({
     perPage: Joi.number().required().min(20).max(20),
 });
 
+const endMatchSchema = Joi.object({
+    matchId: Joi.number().required(),
+    userId: Joi.number().required(),
+});
+
 export { 
     paramsUserIdSchema, topMatchesQuerySchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
-    pastMatchesQuerySchema, paramsMatchIdSchema, queryParamsUserChatsSchema
+    pastMatchesQuerySchema, paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema
 };

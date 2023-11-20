@@ -9,7 +9,6 @@ const getTopMatches = async (req: interfaces.IRequestObject): Promise<interfaces
     if (!count) {
         count = 10;
     }
-    
     const topMatches = await findTopMatches(Number(count), country);
     return topMatches;
 }

@@ -11,6 +11,8 @@ import updateMatchSettings from './updateMatchSettings';
 import addUserInMatchQueue from './addUserInMatchQueue';
 import pastMatches from './pastMatches';
 import getChats from './getChats';
+import markMatchEnded from './markMatchEnded';
+import updateSettingPostEndMatch from './updateSettingPostEndMatch';
 
 export {
     CustomError,
@@ -25,5 +27,7 @@ export {
     updateMatchSettings,
     addUserInMatchQueue,
     pastMatches,
-    getChats
+    getChats,
+    markMatchEnded,
+    updateSettingPostEndMatch
 }

@@ -33,6 +33,7 @@ export enum Errors {
 
     CITY_NOT_FOUND = 'City not found',
     USER_NOT_FOUND = 'User not found',
+    MATCH_NOT_FOUND = 'Match not found',
 
     USER_MATCH_SETTING_NOT_FOUND = 'User match settings not found',
 
@@ -48,6 +49,7 @@ export enum ErrorCodes {
     VALIDATION_ERROR = 'VALIDATION_ERROR',
 
     SETTING_NOT_FOUND = 'SETTING_NOT_FOUND',
+    MATCH_NOT_FOUND = 'MATCH_NOT_FOUND',
 
     INVALID_AGE_LIMIT_SETTING = 'INVALID_AGE_LIMIT_SETTING',
 
@@ -81,6 +83,8 @@ export enum PrefixesForLogs {
     DB_GET_TOP_MATCHES_ERROR = 'DB get top matches error: ',
     DB_UPDATE_MATCH_SETTINGS_ERROR = 'DB update match settings error: ',
     DB_GET_USER_CHATS_ERROR = 'DB get user chats error: ',
+    DB_END_MATCH_ERROR = 'DB end match error: ',
+    DB_UPDATE_SETTING_POST_END_MATCH_ERROR = 'DB update setting post end match error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: '
 }

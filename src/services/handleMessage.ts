@@ -1,4 +1,4 @@
-import { redisClient1 as pubClient, redisClient2 as subClient } from '../config';
+import { redisClient1 as pubClient } from '../config';
 import { Environments, helpers, enums, constants } from '../utils';
 import addSetting from './addSetting';
 import addUserInMatchQueue from './addUserInMatchQueue';

@@ -16,13 +16,17 @@ const getMinSizeQueueIndex = async () => {
     return queueIndex;
 }
 
-const addUserInMatchQueue = async (userId: number) => {
+const addUserInMatchQueue = async (userId: number, updateCurrentQueue: boolean = true) => {
     try {
         const minSizeQueueIndex = await getMinSizeQueueIndex();
         const res = await cacheClient.lPush(Environments.redis.matchQueue + minSizeQueueIndex, userId?.toString());
-        if (res) {
-            await updateUserCurrentQueue(userId, minSizeQueueIndex);
+        if (!res) {
+            throw new Error(`Assign match queue error for user ${userId?.toString()}`);
         }
+        if (updateCurrentQueue) {
+            await updateUserCurrentQueue(userId, minSizeQueueIndex);
+        } 
+        return minSizeQueueIndex;
     } catch(error) {
         console.log(enums.PrefixesForLogs.REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR + error);
     } 

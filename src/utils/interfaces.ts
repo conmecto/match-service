@@ -100,14 +100,20 @@ interface IChatsResponse {
     deletedAt: Date
 }
 
-interface IGetChatsPayload{
+interface IGetChatsPayload {
     matchId: number,
     userId: number,
     page: number,
     perPage: number,
 }
+
+interface IEndMatchRes {
+    id: number,
+    userId1: number,
+    userId2: number
+}
   
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
-    IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload
+    IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes
 };

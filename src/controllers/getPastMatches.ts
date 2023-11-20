@@ -9,7 +9,6 @@ const getPastMatches = async (req: interfaces.IRequestObject): Promise<interface
     if (!count) {
         count = 10;
     }
-    
     const matches = await pastMatches(Number(userId), Number(count));
     return matches;
 }
