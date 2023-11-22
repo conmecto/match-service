@@ -69,9 +69,9 @@ const createChatSocket = async (server: Server) => {
                     });
                 }
             } else if (event === enums.ChatSocketEvents.MARK_MESSAGES_AS_READ) {
-                
+                //using api for now but this can be used for real time message read update   
             } 
-        })
+        });
         
         ws.on('close', () => {
             chatSocketClients.delete(<string>userId);

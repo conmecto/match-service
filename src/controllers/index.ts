@@ -5,5 +5,9 @@ import updateUserSettings from './updateUserSettings';
 import getPastMatches from './getPastMatches';
 import getUserChats from './getUserChats';
 import endMatch from './endMatch';
+import markChatsRead from './markChatsRead';
 
-export { getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats, endMatch }
+export { 
+    getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats, endMatch,
+    markChatsRead 
+}

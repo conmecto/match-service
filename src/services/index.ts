@@ -13,6 +13,7 @@ import pastMatches from './pastMatches';
 import getChats from './getChats';
 import markMatchEnded from './markMatchEnded';
 import updateSettingPostEndMatch from './updateSettingPostEndMatch';
+import updateChatsRead from './updateChatsRead';
 
 export {
     CustomError,
@@ -29,5 +30,6 @@ export {
     pastMatches,
     getChats,
     markMatchEnded,
-    updateSettingPostEndMatch
+    updateSettingPostEndMatch,
+    updateChatsRead
 }
