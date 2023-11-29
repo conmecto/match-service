@@ -31,6 +31,11 @@ export enum Errors {
     UNAUTHORIZED = 'Unauthorized',
     FORBIDDEN = 'Forbidden Resource',
 
+    TOKEN_NOT_SUPPLIED = 'Token not supplied',
+    TOKEN_INVALID = 'Token invalid',
+    TOKEN_EXPIRED = 'Token expired',
+    INVALID_TOKEN_PARAMS = 'Token params invalid',
+
     CITY_NOT_FOUND = 'City not found',
     USER_NOT_FOUND = 'User not found',
     MATCH_NOT_FOUND = 'Match not found',
@@ -46,6 +51,11 @@ export enum ErrorCodes {
     UNAUTHORIZED = 'UNAUTHORIZED',
     FORBIDDEN = 'FORBIDDEN',
 
+    TOKEN_NOT_SUPPLIED = 'TOKEN_NOT_SUPPLIED',
+    TOKEN_INVALID = 'TOKEN_INVALID',
+    TOKEN_EXPIRED = 'TOKEN_EXPIRED',
+    INVALID_TOKEN_PARAMS = 'INVALID_TOKEN_PARAMS',
+
     VALIDATION_ERROR = 'VALIDATION_ERROR',
 
     SETTING_NOT_FOUND = 'SETTING_NOT_FOUND',
@@ -57,6 +67,9 @@ export enum ErrorCodes {
 }
 
 export enum PrefixesForLogs {
+    AUTH_TOKEN_INVALID_ERROR = 'Auth token invalid error: ',
+    AUTH_TOKEN_EXPIRED_ERROR = 'Auth token expired error: ',
+
     REDIS_SET_OBJECT = 'Redis set object error: ',
     REDIS_GET_USER = 'Redis get user error: ', 
     REDIS_GET_OBJECT = 'Redis get object error: ', 

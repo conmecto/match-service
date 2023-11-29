@@ -112,8 +112,23 @@ interface IEndMatchRes {
     userId1: number,
     userId2: number
 }
+
+//Auth Middleware
+
+interface ITokenVerifyResponse {
+    userId: number,
+    extension: string,
+    number: string,
+    jti: string;
+    exp: number;
+    iss?: string;
+    sub?: string;
+    aud?: string | string[];
+    nbf?: number;
+    iat?: number;
+}
   
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
-    IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes
+    IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse
 };

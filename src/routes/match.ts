@@ -4,10 +4,11 @@ import {
     getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats,
     endMatch, markChatsRead
 } from '../controllers';
+import { authenticateRequest } from '../middlewares';
 
 const matchRouter = Router();
 
-matchRouter.get('/setting/:userId', async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.get('/setting/:userId', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserSettings(filterRequest);
@@ -17,7 +18,7 @@ matchRouter.get('/setting/:userId', async (req: Request, res: Response, next: Ne
     }
 });
 
-matchRouter.put('/setting/:userId', async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.put('/setting/:userId', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await updateUserSettings(filterRequest);
@@ -27,7 +28,7 @@ matchRouter.put('/setting/:userId', async (req: Request, res: Response, next: Ne
     }
 });
 
-matchRouter.get('/users/:id', async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.get('/users/:id', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserMatch(filterRequest);
@@ -37,7 +38,7 @@ matchRouter.get('/users/:id', async (req: Request, res: Response, next: NextFunc
     }
 });
 
-matchRouter.get('/top', async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.get('/top', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getTopMatches(filterRequest);
@@ -47,7 +48,7 @@ matchRouter.get('/top', async (req: Request, res: Response, next: NextFunction) 
     }
 });
 
-matchRouter.get('/past', async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.get('/past', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getPastMatches(filterRequest);
@@ -57,7 +58,7 @@ matchRouter.get('/past', async (req: Request, res: Response, next: NextFunction)
     }
 });
 
-matchRouter.get('/:matchId/chats', async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.get('/:matchId/chats', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserChats(filterRequest);
@@ -67,7 +68,7 @@ matchRouter.get('/:matchId/chats', async (req: Request, res: Response, next: Nex
     }
 });
 
-matchRouter.put('/:matchId/chats/read', async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.put('/:matchId/chats/read', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await markChatsRead(filterRequest);
@@ -77,7 +78,7 @@ matchRouter.put('/:matchId/chats/read', async (req: Request, res: Response, next
     }
 });
 
-matchRouter.put('/:matchId/end', async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.put('/:matchId/end', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await endMatch(filterRequest);
