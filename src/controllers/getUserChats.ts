@@ -12,6 +12,7 @@ const getUserChats = async (req: interfaces.IRequestObject): Promise<interfaces.
         page: Number(page), 
         perPage: Number(perPage) 
     });
+    console.log('chats', JSON.stringify(chats))
     return chats;
 }
 
