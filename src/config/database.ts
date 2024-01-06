@@ -3,11 +3,6 @@ import { readFileSync } from 'fs';
 import { Environments, constants, enums } from '../utils';
 import { CustomError } from '../services';
 
-const timestampzOid = 1184;
-pg.types.setTypeParser(timestampzOid, function (value) {
-  return value === null ? null : new Date(value);
-});
-
 const pool = new Pool({
     host: Environments.database.host,
     port: Environments.database.port,
@@ -24,6 +19,11 @@ const pool = new Pool({
             rejectUnauthorized: false
         })
     }
+});
+
+const timestampzOid = 1184;
+pg.types.setTypeParser(timestampzOid, function (value) {
+  return value === null ? null : new Date(value);
 });
 
 pool.on('error', (err, client) => {

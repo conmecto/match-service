@@ -4,6 +4,7 @@ import { updateChatsRead } from '../services';
 const markChatsRead = async (req: interfaces.IRequestObject) => {
     const { matchId } = req.params;
     const { userId } = req.body;
+    console.log('req.body', req.body)
     console.log('userId', userId)
     await validationSchema.endMatchSchema.validateAsync({ matchId, userId });
     await updateChatsRead(matchId, userId);
