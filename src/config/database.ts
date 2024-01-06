@@ -5,7 +5,7 @@ import { CustomError } from '../services';
 
 const timestampzOid = 1184;
 pg.types.setTypeParser(timestampzOid, function (value) {
-  return value
+  return value === null ? null : new Date(value);
 });
 
 const pool = new Pool({
