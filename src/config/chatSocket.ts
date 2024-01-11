@@ -34,8 +34,9 @@ const createChatSocket = async (server: Server) => {
         }
         if (chatSocketClients.has(userId)) {
             console.log('Old socket found for user: ', userId);
+        } else {
+            setSocketWithMatchedUser(userId, ws);
         }
-        setSocketWithMatchedUser(userId, ws);
         
         ws.on('message', (data) => {
             const { message, event }: { message: string, event: string } = JSON.parse(data?.toString());
