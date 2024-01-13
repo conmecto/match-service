@@ -10,6 +10,10 @@ type savedClient = { matchedUserId: number, ws: WebSocket, matchId: number };
 let webSocketServer: SocketServer;
 let chatSocketClients = new Map<string, savedClient>();
 
+const clearChatSocketClient = (userId: string) => {
+    chatSocketClients.delete(userId);
+}
+
 const setSocketWithMatchedUser = async (userId: string, ws: WebSocket) => {
     const match = await getUserLatestMatch(Number(userId));
     if (!match) {
@@ -97,4 +101,4 @@ const createChatSocket = async (server: Server) => {
     });
 }
 
-export { createChatSocket, chatSocketClients }
+export { createChatSocket, chatSocketClients, clearChatSocketClient }

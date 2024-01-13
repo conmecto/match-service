@@ -99,6 +99,7 @@ export enum PrefixesForLogs {
     DB_END_MATCH_ERROR = 'DB end match error: ',
     DB_UPDATE_SETTING_POST_END_MATCH_ERROR = 'DB update setting post end match error: ',
     DB_CHAT_READ_ERROR = 'DB mark chats read error: ',
+    DB_BLOCK_USER_ERROR = 'DB block user error',
     
     EMAIL_SEND_ERROR = 'Email send error: '
 }
