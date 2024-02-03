@@ -22,7 +22,7 @@ export const handleAddSettingsMessage = async (message: any, channel: string) =>
             await pubClient.publish(Environments.redis.channels.processMatchQueue, enums.Messages.MATCH_QUEUE_UPDATED);
         }
     } catch(error) {
-        await logger(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + error);
+        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + error);
         await pubClient.publish(Environments.redis.channels.userCreatedMatchError, message);
     }
 }
