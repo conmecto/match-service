@@ -10,11 +10,8 @@ const updateSettingPostEndMatch = async (userId: number, currentQueue: number) =
     let res: QueryResult | null = null;
     const client = await getDbClient();
     try {
-        console.log(query);
-        console.log(params);
         res = await client.query(query, params);
     } catch(error) {
-        console.error(enums.PrefixesForLogs.DB_UPDATE_SETTING_POST_END_MATCH_ERROR + error);
         throw error;
     } finally {	
         client.release();

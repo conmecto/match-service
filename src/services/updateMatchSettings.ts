@@ -21,11 +21,8 @@ const updateMatchSettings = async (userId: number, updateObj: interfaces.IUpdate
     let res: QueryResult | null = null;
     const client = await getDbClient();
     try {
-        console.log(query);
-        console.log(params);
         res = await client.query(query, params);
     } catch(error) {
-        console.error(enums.PrefixesForLogs.DB_UPDATE_MATCH_SETTINGS_ERROR + error);
         throw error;
     } finally {	
         client.release();

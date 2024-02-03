@@ -83,6 +83,7 @@ export enum PrefixesForLogs {
     REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR = 'Redis add user in match queue error: ',
     REDIS_PROCESS_MATCH_QUEUE_ERROR = 'Redis process match queue error: ',
     REDIS_HANDLE_MATCH_CREATED_ERROR = 'Redis handle match created error: ',
+    REDIS_LOGGING_CHANNEL_ERROR = 'Redis logging channel error: ',
 
     DB_CONNECTED = 'DB connection successful: ',
     DB_CONNECTION_FAILED = 'DB connection failed: ',

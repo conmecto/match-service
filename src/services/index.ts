@@ -15,6 +15,7 @@ import markMatchEnded from './markMatchEnded';
 import updateSettingPostEndMatch from './updateSettingPostEndMatch';
 import updateChatsRead from './updateChatsRead';
 import blockUser from './blockUser';
+import logger from './logger';
 
 export {
     CustomError,
@@ -33,5 +34,6 @@ export {
     markMatchEnded,
     updateSettingPostEndMatch,
     updateChatsRead,
-    blockUser
+    blockUser,
+    logger
 }

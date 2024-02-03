@@ -9,22 +9,19 @@ const markMatchEnded = async (matchId: number, userId: number): Promise<interfac
     let res: QueryResult | null = null;
     const client = await getDbClient();
     try {
-        console.log(query);
-        console.log(params);
         res = await client.query(query, params);
     } catch(error) {
-        console.error(enums.PrefixesForLogs.DB_END_MATCH_ERROR + error);
         throw error;
     } finally {	
         client.release();
     }
     if (res?.rows?.length) {
-      const match = res.rows[0];
-      return {
-        id: match.id,
-        userId1: match.user_id_1,
-        userId2: match.user_id_2
-      }
+        const match = res.rows[0];
+        return {
+            id: match.id,
+            userId1: match.user_id_1,
+            userId2: match.user_id_2
+        }
     }
     return null;
 }

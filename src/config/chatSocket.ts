@@ -4,6 +4,7 @@ import { WebSocketServer, WebSocket, Server as SocketServer } from 'ws';
 import { constants, enums, Environments } from '../utils';
 import { getUserLatestMatch } from '../services';
 import { redisClient1 as pubClient } from './redis';
+import { logger } from '../services';
 
 type savedClient = { matchedUserId: number, ws: WebSocket, matchId: number };
 
@@ -21,13 +22,11 @@ const setSocketWithMatchedUser = async (userId: string, ws: WebSocket) => {
     }
     const matchedUserId = match.userId1 === Number(userId) ? match.userId2 : match.userId1;
     chatSocketClients.set(userId, { matchedUserId, ws, matchId: match.id });
-    console.log('New socket saved for user: ', userId);
 }
 
 const createChatSocket = async (server: Server) => {
     webSocketServer = new WebSocketServer({ server, maxPayload: constants.SOCKET_MAX_PAYLOAD, path: constants.CHAT_SOCKET_PATH });
     webSocketServer.on('connection', (ws: WebSocket, req: IncomingMessage) => {
-        console.log(`Socket server is listening`);
         if (!req?.url) {
             return;
         }
@@ -36,9 +35,7 @@ const createChatSocket = async (server: Server) => {
         if (!userId) {
             return;
         }
-        if (chatSocketClients.has(userId)) {
-            console.log('Old socket found for user: ', userId);
-        } else {
+        if (!chatSocketClients.has(userId)) {
             setSocketWithMatchedUser(userId, ws);
         }
         
@@ -69,7 +66,7 @@ const createChatSocket = async (server: Server) => {
                         seen: false
                     }), (error) => {
                         if (error) {
-                            console.log('Chat message send socket error:', error);
+                            logger('Chat message send socket error: ' + error);
                         }
                     });
                 }
@@ -84,19 +81,19 @@ const createChatSocket = async (server: Server) => {
         });
 
         ws.on('error', (error) => {
-            console.log('Chat socket error: ', error);
+            logger('Chat socket error: ' + error);
             chatSocketClients.delete(<string>userId);
             ws.close();
         });
     });
 
     webSocketServer.on('close', () => {
-        console.error('socket server is closed');
+        logger('socket server is closed');
         chatSocketClients.clear();
     });
 
     webSocketServer.on('error', (error) => {
-        console.error('Socket server error', error);
+        logger('Socket server error ' + error);
         chatSocketClients.clear();
     });
 }

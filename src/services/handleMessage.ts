@@ -3,6 +3,7 @@ import { Environments, helpers, enums, constants } from '../utils';
 import addSetting from './addSetting';
 import addUserInMatchQueue from './addUserInMatchQueue';
 import { setKey } from './cache';
+import logger from './logger';
 
 export const handleAddSettingsMessage = async (message: any, channel: string) => {
     try {
@@ -21,7 +22,7 @@ export const handleAddSettingsMessage = async (message: any, channel: string) =>
             await pubClient.publish(Environments.redis.channels.processMatchQueue, enums.Messages.MATCH_QUEUE_UPDATED);
         }
     } catch(error) {
-        console.log(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + error);
+        await logger(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + error);
         await pubClient.publish(Environments.redis.channels.userCreatedMatchError, message);
     }
 }

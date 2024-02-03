@@ -46,7 +46,8 @@ export default {
             userCreatedMatch: process.env.REDIS_CHANNEL_USER_CREATED_MATCH || 'user-created-match',
             userCreatedMatchError: process.env.REDIS_CHANNEL_USER_CREATED_MATCH_ERROR || 'user-created-match-error',
             matchCreated: process.env.REDIS_CHANNEL_MATCH_CREATED || 'match-created',
-            saveMessage: process.env.REDIS_CHANNEL_SAVE_MESSAGE || 'save-message'
+            saveMessage: process.env.REDIS_CHANNEL_SAVE_MESSAGE || 'save-message',
+            logging: process.env.REDIS_CHANNEL_LOGGING || 'logging-channel', 
         },
         matchQueue: process.env.MATCH_QUEUE || 'match-queue-',
         connectTimeout: Number(process.env.REDIS_CONNECT_TIMEOUT) || 30000,

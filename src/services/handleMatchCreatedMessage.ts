@@ -1,6 +1,8 @@
 import getMatchById from './getMatchById';
 import { setKey } from './cache';
 import { enums, constants } from '../utils';
+import logger from './logger';
+
 const handleMatchCreatedMessage = async (message: string, channel: string) => {
     try {
         const matchId = Number(message);
@@ -15,7 +17,7 @@ const handleMatchCreatedMessage = async (message: string, channel: string) => {
             setKey(constants.CHECK_USER_MATCHED_KEY + userId2, userId1?.toString()),
         ]);
     } catch(error) {
-        console.error(enums.PrefixesForLogs.REDIS_HANDLE_MATCH_CREATED_ERROR + error);
+        await logger(enums.PrefixesForLogs.REDIS_HANDLE_MATCH_CREATED_ERROR + error);
     }
 }
 
