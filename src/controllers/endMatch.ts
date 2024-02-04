@@ -6,6 +6,13 @@ const endMatch = async (req: interfaces.IRequestObject) => {
     const { matchId } = req.params;
     const { userId, block } = req.body;
     await validationSchema.endMatchSchema.validateAsync({ matchId, userId, block });
+    const user = req.user;
+    if (!user) {
+        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
+    }
+    if (Number(user.userId) !== Number(userId)) {
+        throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
+    }
     const res = await markMatchEnded(matchId, userId);
     if (!res) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.MATCH_NOT_FOUND, enums.ErrorCodes.MATCH_NOT_FOUND);

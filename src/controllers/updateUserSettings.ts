@@ -5,6 +5,13 @@ import { CustomError, updateMatchSettings, addUserInMatchQueue } from '../servic
 const updateUserSettings = async (req: interfaces.IRequestObject): Promise<interfaces.IGetSettingObject> => {
     await validationSchema.updateUserMatchSettingSchema.validateAsync(req.body);
     const userId = Number(req.params['userId']);
+    const user = req.user;
+    if (!user) {
+        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
+    }
+    if (Number(user.userId) !== Number(userId)) {
+        throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
+    }
     const { minSearchAge, maxSearchAge, searchFor, searchIn } = req.body;
     const updateObj: interfaces.IUpdateSettingObj = {};
     if (searchFor) {
