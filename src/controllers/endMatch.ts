@@ -24,10 +24,10 @@ const endMatch = async (req: interfaces.IRequestObject) => {
     if (queueUser2) {
         await updateSettingPostEndMatch(res.userId2, queueUser2);
     }
-    await Promise.all([
-        cacheClient.setKey(constants.CHECK_USER_MATCHED_KEY + res.userId1, 'false'),
-        cacheClient.setKey(constants.CHECK_USER_MATCHED_KEY + res.userId2, 'false')
-    ]);
+    // await Promise.all([
+    //     cacheClient.setKey(constants.CHECK_USER_MATCHED_KEY + res.userId1, 'false'),
+    //     cacheClient.setKey(constants.CHECK_USER_MATCHED_KEY + res.userId2, 'false')
+    // ]);
     return { 
         message: 'Match ended successfully'
     }

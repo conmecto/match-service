@@ -1,6 +1,5 @@
 import { getDbClient } from '../config';
 import { QueryResult } from 'pg';
-import { interfaces, enums } from '../utils';
 
 const updateUserCurrentQueue = async (userId: number, currentQueue: number) => {
 	const query = 'UPDATE setting SET current_queue=$1, is_matched=false WHERE user_id=$2';

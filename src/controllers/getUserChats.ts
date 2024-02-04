@@ -1,4 +1,4 @@
-import { interfaces, validationSchema, enums, constants } from '../utils';
+import { interfaces, validationSchema } from '../utils';
 import { getChats } from '../services';
 
 const getUserChats = async (req: interfaces.IRequestObject): Promise<interfaces.IChatsResponse[]> => {

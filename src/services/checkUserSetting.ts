@@ -1,6 +1,5 @@
 import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
-import { enums } from '../utils';
 
 const checkUserSetting = async (userId: number): Promise<boolean> => {
     const query = 'SELECT id FROM setting WHERE user_id=$1';
