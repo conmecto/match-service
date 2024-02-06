@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 // Generic
 interface IGeneric {
     [key: string]: any
@@ -7,14 +9,19 @@ interface IGenericResponse {
     message: string
 }
 
-// Node reqeust object  
+// Node request object  
+interface ICustomerRequest extends Request {
+    user?: Record<string, any>
+}
+
 interface IRequestObject extends IGeneric {
     body: IGeneric,
     query: IGeneric,
     params: IGeneric,
     method: string,
     path: string,
-    headers: IGeneric
+    headers: IGeneric,
+    file?: IGeneric
 }
 
 //BaseModel
@@ -130,5 +137,6 @@ interface ITokenVerifyResponse {
   
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
-    IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse
+    IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
+    ICustomerRequest
 };

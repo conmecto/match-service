@@ -29,7 +29,7 @@ const addUserInMatchQueue = async (userId: number, updateCurrentQueue: boolean =
         } 
         return minSizeQueueIndex;
     } catch(error) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR + error);
+        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR + JSON.stringify(error));
     } 
 }
 

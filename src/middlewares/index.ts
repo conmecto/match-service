@@ -1,3 +1,3 @@
-import authenticateRequest from './authMiddleware';
+import { authenticateRequest, verifyAuthToken } from './authMiddleware';
 
-export { authenticateRequest }
+export { authenticateRequest, verifyAuthToken }
