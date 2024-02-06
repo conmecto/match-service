@@ -39,4 +39,4 @@ const authenticateRequest = async (req: interfaces.IRequestObject, res: Response
     }
 }
 
-export default authenticateRequest;
+export { authenticateRequest, verifyAuthToken };

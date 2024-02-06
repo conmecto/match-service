@@ -2,9 +2,9 @@ import { Server, IncomingMessage } from 'http';
 import { parse } from 'url';
 import { WebSocketServer, WebSocket, Server as SocketServer } from 'ws';
 import { constants, enums, Environments } from '../utils';
-import { getUserLatestMatch } from '../services';
+import { getUserLatestMatch, logger } from '../services';
 import { redisClient1 as pubClient } from './redis';
-import { logger } from '../services';
+import { verifyAuthToken } from '../middlewares';
 
 type savedClient = { matchedUserId: number, ws: WebSocket, matchId: number };
 
@@ -24,21 +24,33 @@ const setSocketWithMatchedUser = async (userId: string, ws: WebSocket) => {
     chatSocketClients.set(userId, { matchedUserId, ws, matchId: match.id });
 }
 
+const verifyClient = (info, callback) => {
+    const req = info.req;
+    const parsedReq = parse(req?.url, true);
+    const userId = <string>parsedReq?.query?.userId;
+    const accessToken: string = <string>parsedReq?.query?.accessToken;
+    if (userId && accessToken) {
+        verifyAuthToken(accessToken).then(res => {
+            console.log('again');
+            callback(res.userId === Number(userId));
+        }).catch((error) => {
+            logger(`Match Service: Chat Verify Token Error UserId ${userId}: ` + JSON.stringify(error));
+            callback(false);
+        });
+    } else {    
+        callback(false);
+    }
+}
+
 const createChatSocket = async (server: Server) => {
-    webSocketServer = new WebSocketServer({ server, maxPayload: constants.SOCKET_MAX_PAYLOAD, path: constants.CHAT_SOCKET_PATH });
+    webSocketServer = new WebSocketServer({ server, maxPayload: constants.SOCKET_MAX_PAYLOAD, path: constants.CHAT_SOCKET_PATH, verifyClient });
     webSocketServer.on('connection', (ws: WebSocket, req: IncomingMessage) => {
-        if (!req?.url) {
-            return;
-        }
-        const parsedReq = parse(req.url, true);
-        let userId = <string>parsedReq?.query?.userId;
-        if (!userId) {
-            return;
-        }
+        const parsedReq = parse(req.url as string, true);
+        const userId = <string>parsedReq?.query?.userId;
         if (!chatSocketClients.has(userId)) {
             setSocketWithMatchedUser(userId, ws);
         }
-        
+
         ws.on('message', (data) => {
             const { message, event }: { message: string, event: string } = JSON.parse(data?.toString());
             const { matchedUserId, ws, matchId } = <savedClient>chatSocketClients.get(userId);
@@ -66,7 +78,7 @@ const createChatSocket = async (server: Server) => {
                         seen: false
                     }), (error) => {
                         if (error) {
-                            logger('Chat message send socket error: ' + error);
+                            logger('Chat message send socket error: ' + JSON.stringify(error));
                         }
                     });
                 }
@@ -81,19 +93,19 @@ const createChatSocket = async (server: Server) => {
         });
 
         ws.on('error', (error) => {
-            logger('Chat socket error: ' + error);
+            logger('Match Service: Chat socket error: ' + JSON.stringify(error));
             chatSocketClients.delete(<string>userId);
             ws.close();
         });
     });
 
     webSocketServer.on('close', () => {
-        logger('socket server is closed');
+        logger('Match Service: Socket server is closed');
         chatSocketClients.clear();
     });
 
     webSocketServer.on('error', (error) => {
-        logger('Socket server error ' + error);
+        logger('Match Service: Socket server error: ' + JSON.stringify(error));
         chatSocketClients.clear();
     });
 }
