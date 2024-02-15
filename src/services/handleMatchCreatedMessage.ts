@@ -19,7 +19,7 @@ const handleMatchCreatedMessage = async (message: string, channel: string) => {
         //     setKey(constants.CHECK_USER_MATCHED_KEY + userId2, userId1?.toString()),
         // ]);
     } catch(error) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_HANDLE_MATCH_CREATED_ERROR + JSON.stringify(error));
+        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_HANDLE_MATCH_CREATED_ERROR + error?.toString());
     }
 }
 

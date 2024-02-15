@@ -34,7 +34,7 @@ const verifyClient = (info, callback) => {
             console.log('again');
             callback(res.userId === Number(userId));
         }).catch((error) => {
-            logger(`Match Service: Chat Verify Token Error UserId ${userId}: ` + JSON.stringify(error));
+            logger(`Match Service: Chat Verify Token Error UserId ${userId}: ` + error?.toString());
             callback(false);
         });
     } else {    
@@ -78,7 +78,7 @@ const createChatSocket = async (server: Server) => {
                         seen: false
                     }), (error) => {
                         if (error) {
-                            logger('Chat message send socket error: ' + JSON.stringify(error));
+                            logger('Chat message send socket error: ' + error?.toString());
                         }
                     });
                 }
@@ -93,7 +93,7 @@ const createChatSocket = async (server: Server) => {
         });
 
         ws.on('error', (error) => {
-            logger('Match Service: Chat socket error: ' + JSON.stringify(error));
+            logger('Match Service: Chat socket error: ' + error?.toString());
             chatSocketClients.delete(<string>userId);
             ws.close();
         });
@@ -105,7 +105,7 @@ const createChatSocket = async (server: Server) => {
     });
 
     webSocketServer.on('error', (error) => {
-        logger('Match Service: Socket server error: ' + JSON.stringify(error));
+        logger('Match Service: Socket server error: ' + error?.toString());
         chatSocketClients.clear();
     });
 }
