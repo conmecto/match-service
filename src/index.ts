@@ -2,6 +2,7 @@ import express, { Express, urlencoded, json } from 'express';
 import { createServer, Server } from 'http';
 import { createServer as createSecureServer, Server as SecureServer } from 'https';
 import { readFileSync } from 'fs';
+import { join } from 'path';
 import { Environments } from './utils';
 import router from './routes';
 import { errorHandler } from './middlewares/errorHandling';
@@ -17,8 +18,8 @@ let server: Server | SecureServer | null = null;
 
 if (Environments.secure) {
     const options = {
-        key: readFileSync('./key.pem'),
-        cert: readFileSync('./cert.pem')
+        key: readFileSync(join(__dirname, '..', '/1', '/key.pem')),
+        cert: readFileSync(join(__dirname, '..', '/1', '/cert.pem'))
     };
     server = createSecureServer(options, app);
 } else {
