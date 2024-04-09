@@ -15,10 +15,10 @@ const updateUserSettings = async (req: interfaces.IRequestObject): Promise<inter
     const { minSearchAge, maxSearchAge, searchFor, searchIn } = req.body;
     const updateObj: interfaces.IUpdateSettingObj = {};
     if (searchFor) {
-        updateObj.searchFor = searchFor;
+        updateObj.searchFor = searchFor?.toLowerCase();
     }
     if (searchIn) {
-        updateObj.searchIn = searchIn;
+        updateObj.searchIn = searchIn?.toLowerCase();
     }
     if ((minSearchAge && !maxSearchAge) || (maxSearchAge && !minSearchAge)) {
         throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_AGE_LIMIT_SETTING, enums.ErrorCodes.INVALID_AGE_LIMIT_SETTING);       
