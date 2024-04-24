@@ -78,6 +78,20 @@ interface IGetMatchObj {
     country?: string,
 }
 
+interface IGetMatchObjWithSetting {
+    id?: number,
+    userId1?: number,
+    userId2?: number,
+    score?: number,
+    createdAt?: Date,
+    city?: string,
+    country?: string,
+    settingId: number,
+    userId: number,
+    totalMatchScore: number,
+    pinnedPostId?: number
+}
+
 //Chat Room 
 interface ICreateChatRoomObj {
     matchId: number,
@@ -138,5 +152,5 @@ interface ITokenVerifyResponse {
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
     IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
-    ICustomerRequest
+    ICustomerRequest, IGetMatchObjWithSetting
 };

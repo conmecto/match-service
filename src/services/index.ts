@@ -16,6 +16,7 @@ import updateSettingPostEndMatch from './updateSettingPostEndMatch';
 import updateChatsRead from './updateChatsRead';
 import blockUser from './blockUser';
 import logger from './logger';
+import getUserLatestMatchWithSetting from './getUserLatestMatchWithSetting';
 
 export {
     CustomError,
@@ -35,5 +36,6 @@ export {
     updateSettingPostEndMatch,
     updateChatsRead,
     blockUser,
-    logger
+    logger,
+    getUserLatestMatchWithSetting
 }
