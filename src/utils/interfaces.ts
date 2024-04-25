@@ -148,9 +148,16 @@ interface ITokenVerifyResponse {
     nbf?: number;
     iat?: number;
 }
+
+interface IGenerateUploadUrlBody { 
+    matchId: number, 
+    userId: number, 
+    fileName: string, 
+    contentType: string 
+}
   
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
     IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
-    ICustomerRequest, IGetMatchObjWithSetting
+    ICustomerRequest, IGetMatchObjWithSetting, IGenerateUploadUrlBody
 };

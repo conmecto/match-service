@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { Gender, Country, SearchFor } from './enums';
+import { ALLOWED_IMAGE_TYPES } from './constants';
 
 const paramsUserIdSchema = Joi.object({
     id: Joi.number().required()
@@ -47,7 +48,15 @@ const markChatsReadSchema = Joi.object({
     userId: Joi.number().required(),
 });
 
+const generateUploadUrlSchema =  Joi.object({
+    matchId: Joi.number().required(),
+    userId: Joi.number().required(),
+    fileName: Joi.string().required(),
+    contentType: Joi.string().valid(...ALLOWED_IMAGE_TYPES).required()
+});
+
 export { 
     paramsUserIdSchema, topMatchesQuerySchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
-    pastMatchesQuerySchema, paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema
+    pastMatchesQuerySchema, paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema,
+    generateUploadUrlSchema
 };

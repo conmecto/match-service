@@ -7,8 +7,9 @@ import getUserChats from './getUserChats';
 import endMatch from './endMatch';
 import markChatsRead from './markChatsRead';
 import getUserMatchWithSetting from './getUserMatchWithSetting';
+import generateSignedUrl from './generateSignedUrl';
 
 export { 
     getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats, endMatch,
-    markChatsRead, getUserMatchWithSetting 
+    markChatsRead, getUserMatchWithSetting, generateSignedUrl
 }

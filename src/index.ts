@@ -6,7 +6,7 @@ import { join } from 'path';
 import { Environments } from './utils';
 import router from './routes';
 import { errorHandler } from './middlewares/errorHandling';
-import { createChatSocket } from './config'
+import { createChatSocket, runAwsFile } from './config'
 
 const app: Express = express();
 
@@ -31,3 +31,5 @@ createChatSocket(server);
 server.listen(Environments.server.port, 
     () => console.log(`Server is running on port: ${Environments.server.port}`)
 );
+
+runAwsFile();

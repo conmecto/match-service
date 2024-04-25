@@ -102,6 +102,10 @@ export enum PrefixesForLogs {
     DB_CHAT_READ_ERROR = 'DB mark chats read error: ',
     DB_BLOCK_USER_ERROR = 'DB block user error',
     
+    AWS_CHECK_BUCKET_ERROR = 'AWS check bucket error: ',
+    AWS_CREATE_BUCKET_ERROR = 'AWS create bucket error: ',
+    AWS_GENERATE_UPLOAD_URL_ERROR = 'AWS generate upload url error: ',
+    
     EMAIL_SEND_ERROR = 'Email send error: '
 }
 
@@ -137,6 +141,7 @@ export enum SettingFieldsDbName {
 
 export enum ChatSocketEvents {
     SAVE_MESSAGE = 'save-message',
+    SAVE_FILE = 'save-file',
     MARK_MESSAGES_AS_READ = 'mark-messages-as-read',
     MESSAGE_RECEIVED = 'message-received'
 }

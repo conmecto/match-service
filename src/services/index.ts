@@ -17,6 +17,7 @@ import updateChatsRead from './updateChatsRead';
 import blockUser from './blockUser';
 import logger from './logger';
 import getUserLatestMatchWithSetting from './getUserLatestMatchWithSetting';
+import addUploadUrlRequest from './addUploadUrlRequest';
 
 export {
     CustomError,
@@ -37,5 +38,6 @@ export {
     updateChatsRead,
     blockUser,
     logger,
-    getUserLatestMatchWithSetting
+    getUserLatestMatchWithSetting,
+    addUploadUrlRequest
 }

@@ -1,8 +1,8 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
 import { 
-    getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats,
-    endMatch, markChatsRead, getUserMatchWithSetting
+    getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats,
+    endMatch, markChatsRead, getUserMatchWithSetting, generateSignedUrl
 } from '../controllers';
 import { authenticateRequest } from '../middlewares';
 
@@ -83,6 +83,16 @@ matchRouter.put('/:matchId/end', authenticateRequest, async (req: Request, res: 
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await endMatch(filterRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
+matchRouter.post('/:matchId/chats/signed-url', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await generateSignedUrl(filterRequest);
+        res.status(enums.StatusCodes.CREATED).send(controllerResponse);    
     } catch(err) {
         next(err);
     }
