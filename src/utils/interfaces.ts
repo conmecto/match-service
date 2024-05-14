@@ -89,7 +89,8 @@ interface IGetMatchObjWithSetting {
     settingId: number,
     userId: number,
     totalMatchScore: number,
-    pinnedPostId?: number
+    pinnedPostId?: number,
+    chatNotification: boolean
 }
 
 //Chat Room 

@@ -14,11 +14,25 @@ const getUserLatestMatchWithSetting = async (userId: number): Promise<interfaces
         ) 
         WHERE s.user_id=$1 AND s.deleted_at IS NULL
     `;
+    let chatNotification = false;
     const params = [userId];
     let res: QueryResult | null = null;
     const client = await getDbClient();
     try {
         res = await client.query(query, params);
+        if (res?.rows?.length && res.rows[0].match_id) {
+            const chatQuery = `
+                SELECT id 
+                FROM chat 
+                WHERE receiver=$1 AND match_id=$2 AND seen=false AND deleted_at IS NULL 
+                LIMIT 1
+            `;
+            const chatQueryParams = [userId, res.rows[0].match_id];
+            const chatQueryRes = await client.query(chatQuery, chatQueryParams);
+            if (chatQueryRes?.rows?.length) {
+                chatNotification = true;
+            }
+        }
     } catch(error) {
         throw error;
     } finally {	
@@ -37,7 +51,8 @@ const getUserLatestMatchWithSetting = async (userId: number): Promise<interfaces
             score: temp?.score,
             createdAt: temp?.created_at,
             city: temp?.city,
-            country: temp?.country
+            country: temp?.country,
+            chatNotification
         }
     }
     return null;
