@@ -13,24 +13,15 @@ const endMatch = async (req: interfaces.IRequestObject) => {
     if (Number(user.userId) !== Number(userId)) {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
-    const res = await markMatchEnded(matchId, userId);
+    const res = await markMatchEnded(matchId, userId, block);
     if (!res) {
-        throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.MATCH_NOT_FOUND, enums.ErrorCodes.MATCH_NOT_FOUND);
+        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
     clearChatSocketClient(matchId, res.userId1?.toString());
     clearChatSocketClient(matchId, res.userId2?.toString());
-    if (block) {
-        const blockedUserId = res.userId1 === userId ? res.userId2 : res.userId1;
-        await blockUser(userId, blockedUserId);
-    }
     const queueUser1 = await addUserInMatchQueue(res.userId1, false);
-    if (queueUser1) {
-        await updateSettingPostEndMatch(res.userId1, queueUser1);
-    }
     const queueUser2 = await addUserInMatchQueue(res.userId2, false);
-    if (queueUser2) {
-        await updateSettingPostEndMatch(res.userId2, queueUser2);
-    }
+    await updateSettingPostEndMatch([res.userId1, res.userId2], [queueUser1 || 1, queueUser2 || 1]);
     // await Promise.all([
     //     cacheClient.setKey(constants.CHECK_USER_MATCHED_KEY + res.userId1, 'false'),
     //     cacheClient.setKey(constants.CHECK_USER_MATCHED_KEY + res.userId2, 'false')
