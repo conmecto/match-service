@@ -16,7 +16,7 @@ import updateSettingPostEndMatch from './updateSettingPostEndMatch';
 import updateChatsRead from './updateChatsRead';
 import blockUser from './blockUser';
 import logger from './logger';
-import getUserLatestMatchWithSetting from './getUserLatestMatchWithSetting';
+import fetchUserMatches from './fetchUserMatches';
 import addUploadUrlRequest from './addUploadUrlRequest';
 
 export {
@@ -38,6 +38,6 @@ export {
     updateChatsRead,
     blockUser,
     logger,
-    getUserLatestMatchWithSetting,
+    fetchUserMatches,
     addUploadUrlRequest
 }

@@ -3,7 +3,7 @@ import { Gender, Country, SearchFor } from './enums';
 import { ALLOWED_IMAGE_TYPES } from './constants';
 
 const paramsUserIdSchema = Joi.object({
-    id: Joi.number().required()
+    userId: Joi.number().required()
 });
 
 const topMatchesQuerySchema = Joi.object({
@@ -34,7 +34,7 @@ const paramsMatchIdSchema = Joi.object({
 const queryParamsUserChatsSchema = Joi.object({
     userId: Joi.number().required(),
     page: Joi.number().required().min(1),
-    perPage: Joi.number().required().min(20).max(20),
+    perPage: Joi.number().required().min(1).max(10),
 });
 
 const endMatchSchema = Joi.object({

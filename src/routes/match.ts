@@ -2,7 +2,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
 import { 
     getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats,
-    endMatch, markChatsRead, getUserMatchWithSetting, generateSignedUrl
+    endMatch, markChatsRead, getUserMatches, generateSignedUrl
 } from '../controllers';
 import { authenticateRequest } from '../middlewares';
 
@@ -28,10 +28,10 @@ matchRouter.put('/setting/:userId', authenticateRequest, async (req: Request, re
     }
 });
 
-matchRouter.get('/users/:id', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+matchRouter.get('/users/:userId', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await getUserMatchWithSetting(filterRequest);
+        const controllerResponse = await getUserMatches(filterRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);

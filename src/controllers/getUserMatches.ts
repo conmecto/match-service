@@ -1,9 +1,9 @@
 import { interfaces, validationSchema, enums } from '../utils';
-import { getUserLatestMatchWithSetting, CustomError } from '../services';
+import { fetchUserMatches, CustomError } from '../services';
 
-const getUserMatchWithSetting = async (req: interfaces.IRequestObject): Promise<interfaces.IGetMatchObjWithSetting | undefined> => {
+const getUserMatches = async (req: interfaces.IRequestObject) => {
     await validationSchema.paramsUserIdSchema.validateAsync(req.params);
-    const userId = Number(req.params['id']);
+    const userId = Number(req.params['userId']);
     const user = req.user;
     if (!user) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
@@ -11,11 +11,11 @@ const getUserMatchWithSetting = async (req: interfaces.IRequestObject): Promise<
     if (Number(user.userId) !== Number(userId)) {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
-    const userMatch = await getUserLatestMatchWithSetting(userId);
-    if (!userMatch) {
-        return;
-    }
-    return userMatch;
+    const userMatches = await fetchUserMatches(userId);
+    return {
+        data: userMatches,
+        hasMore: false
+    };
 }
 
-export default getUserMatchWithSetting;
+export default getUserMatches;

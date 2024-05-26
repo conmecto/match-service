@@ -6,10 +6,10 @@ import getPastMatches from './getPastMatches';
 import getUserChats from './getUserChats';
 import endMatch from './endMatch';
 import markChatsRead from './markChatsRead';
-import getUserMatchWithSetting from './getUserMatchWithSetting';
+import getUserMatches from './getUserMatches';
 import generateSignedUrl from './generateSignedUrl';
 
 export { 
     getUserMatch, getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats, endMatch,
-    markChatsRead, getUserMatchWithSetting, generateSignedUrl
+    markChatsRead, getUserMatches, generateSignedUrl
 }
