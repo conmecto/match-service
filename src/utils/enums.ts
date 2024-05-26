@@ -134,9 +134,7 @@ export enum SettingFieldsDbName {
     'updatedAt' = 'updated_at',
     'updated_at' = 'updatedAt',
     'currentQueue' = 'current_queue',
-    'current_queue' = 'currentQueue',
-    'isMatched' = 'is_matched',
-    'is_matched' = 'isMatched'
+    'current_queue' = 'currentQueue'
 }
 
 export enum ChatSocketEvents {

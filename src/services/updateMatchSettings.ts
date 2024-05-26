@@ -16,7 +16,7 @@ const updateMatchSettings = async (userId: number, updateObj: interfaces.IUpdate
         params.push(updateObj[key]);
         i += 1;
     }
-    splitQuery.push('WHERE user_id=$1 RETURNING setting.id, setting.user_id, setting.search_for, setting.search_in, setting.min_search_age, setting.max_search_age, setting.is_matched, setting.current_queue');
+    splitQuery.push('WHERE user_id=$1 RETURNING setting.id, setting.user_id, setting.search_for, setting.search_in, setting.min_search_age, setting.max_search_age, setting.current_queue');
     const query = splitQuery.join('');
     let res: QueryResult | null = null;
     const client = await getDbClient();

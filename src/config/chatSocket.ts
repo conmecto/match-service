@@ -1,27 +1,30 @@
 import { Server, IncomingMessage } from 'http';
 import { parse } from 'url';
 import { WebSocketServer, WebSocket, Server as SocketServer } from 'ws';
-import { constants, enums, Environments } from '../utils';
-import { getUserLatestMatch, logger } from '../services';
+import { constants, enums, Environments, helpers } from '../utils';
+import { getMatchById, logger } from '../services';
 import { redisClient1 as pubClient } from './redis';
 import { verifyAuthToken } from '../middlewares';
 
-type savedClient = { matchedUserId: number, ws: WebSocket, matchId: number };
+type savedClient = { userId: number, matchedUserId: number, ws: WebSocket, matchId: number };
 
 let webSocketServer: SocketServer;
 let chatSocketClients = new Map<string, savedClient>();
 
-const clearChatSocketClient = (userId: string) => {
-    chatSocketClients.delete(userId);
+const getChatSocketKey = helpers.getChatSocketKey;
+
+const clearChatSocketClient = (matchId: string, userId: string) => {
+    chatSocketClients.delete(getChatSocketKey(matchId, userId));
 }
 
-const setSocketWithMatchedUser = async (userId: string, ws: WebSocket) => {
-    const match = await getUserLatestMatch(Number(userId));
-    if (!match) {
+const setSocketWithMatchedUser = async (matchId: string, userId: string, ws: WebSocket) => {
+    const match = await getMatchById(Number(matchId));
+    const userIdNumeric = Number(userId);
+    if (!match || (match.userId1 !== userIdNumeric && match.userId2 !== userIdNumeric)) {
         return;
     }
-    const matchedUserId = match.userId1 === Number(userId) ? match.userId2 : match.userId1;
-    chatSocketClients.set(userId, { matchedUserId, ws, matchId: match.id });
+    const matchedUserId = match.userId1 === userIdNumeric ? match.userId2 : match.userId1;
+    chatSocketClients.set(getChatSocketKey(matchId, userId), { userId: userIdNumeric, matchedUserId, ws, matchId: match.id });
 }
 
 const verifyClient = (info, callback) => {
@@ -31,7 +34,6 @@ const verifyClient = (info, callback) => {
     const accessToken: string = <string>parsedReq?.query?.accessToken;
     if (userId && accessToken) {
         verifyAuthToken(accessToken).then(res => {
-            console.log('again');
             callback(res.userId === Number(userId));
         }).catch((error) => {
             logger(`Match Service: Chat Verify Token Error UserId ${userId}: ` + error?.toString());
@@ -47,13 +49,17 @@ const createChatSocket = async (server: Server) => {
     webSocketServer.on('connection', (ws: WebSocket, req: IncomingMessage) => {
         const parsedReq = parse(req.url as string, true);
         const userId = <string>parsedReq?.query?.userId;
-        if (!chatSocketClients.has(userId)) {
-            setSocketWithMatchedUser(userId, ws);
+        const matchId = <string>parsedReq?.query?.matchId;
+        const chatSocketKey = getChatSocketKey(matchId, userId);
+        if (!chatSocketClients.has(chatSocketKey)) {
+            setSocketWithMatchedUser(matchId, userId, ws);
         }
 
         ws.on('message', (data) => {
-            const { message, event }: { message: string, event: string } = JSON.parse(data?.toString());
-            const { matchedUserId, ws, matchId } = <savedClient>chatSocketClients.get(userId);
+            const { message, event }: { 
+                message: string, event: string
+            } = JSON.parse(data?.toString());
+            const { matchedUserId } = chatSocketClients.get(chatSocketKey) as savedClient;
             if (event === enums.ChatSocketEvents.SAVE_MESSAGE) {
                 pubClient.publish(Environments.redis.channels.saveMessage, Buffer.from(
                     JSON.stringify({
@@ -63,8 +69,9 @@ const createChatSocket = async (server: Server) => {
                         matchId
                     })
                 ));
-                if (chatSocketClients.has(matchedUserId?.toString())) {
-                    const { ws: receiverSocket } = <savedClient>chatSocketClients.get(matchedUserId?.toString());
+                const matchedUserChatSocketKey = getChatSocketKey(matchId?.toString(), matchedUserId?.toString());
+                if (chatSocketClients.has(matchedUserChatSocketKey)) {
+                    const { ws: receiverSocket } = <savedClient>chatSocketClients.get(matchedUserChatSocketKey);
                     receiverSocket.send(JSON.stringify({ 
                         event: enums.ChatSocketEvents.MESSAGE_RECEIVED,
                         sender: userId, 
@@ -88,13 +95,13 @@ const createChatSocket = async (server: Server) => {
         });
         
         ws.on('close', () => {
-            chatSocketClients.delete(<string>userId);
+            chatSocketClients.delete(chatSocketKey);
             ws.close();
         });
 
         ws.on('error', (error) => {
             logger('Match Service: Chat socket error: ' + error?.toString());
-            chatSocketClients.delete(<string>userId);
+            chatSocketClients.delete(chatSocketKey);
             ws.close();
         });
     });

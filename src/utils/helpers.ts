@@ -9,4 +9,8 @@ const getAge = (date: string): number => {
     return age;
 }
 
-export { getAge }
+const getChatSocketKey = (matchId: string, userId: string) => {
+    return `${matchId}:${userId}`;
+}
+
+export { getAge, getChatSocketKey }

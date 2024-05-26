@@ -1,4 +1,4 @@
-import { interfaces, validationSchema, enums, constants } from '../utils';
+import { interfaces, validationSchema, enums } from '../utils';
 import { markMatchEnded, CustomError, addUserInMatchQueue, updateSettingPostEndMatch, cacheClient, blockUser } from '../services';
 import { clearChatSocketClient } from '../config/chatSocket';
 
@@ -17,8 +17,8 @@ const endMatch = async (req: interfaces.IRequestObject) => {
     if (!res) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.MATCH_NOT_FOUND, enums.ErrorCodes.MATCH_NOT_FOUND);
     }
-    clearChatSocketClient(res.userId1?.toString());
-    clearChatSocketClient(res.userId2?.toString());
+    clearChatSocketClient(matchId, res.userId1?.toString());
+    clearChatSocketClient(matchId, res.userId2?.toString());
     if (block) {
         const blockedUserId = res.userId1 === userId ? res.userId2 : res.userId1;
         await blockUser(userId, blockedUserId);
