@@ -1,7 +1,7 @@
 import { interfaces, validationSchema, enums } from '../utils';
 import { getChats, CustomError } from '../services';
 
-const getUserChats = async (req: interfaces.IRequestObject): Promise<interfaces.IChatsResponse[]> => {
+const getUserChats = async (req: interfaces.IRequestObject) => {
     await validationSchema.paramsMatchIdSchema.validateAsync(req.params);
     await validationSchema.queryParamsUserChatsSchema.validateAsync(req.query);
     const { matchId } = req.params; 
@@ -19,7 +19,10 @@ const getUserChats = async (req: interfaces.IRequestObject): Promise<interfaces.
         page: Number(page), 
         perPage: Number(perPage) 
     });
-    return chats;
+    return {
+        data: chats,
+        hasMoreChats: chats.length ? chats[0].hasMore : false
+    };
 }
 
 export default getUserChats;

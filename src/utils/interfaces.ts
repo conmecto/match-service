@@ -86,10 +86,6 @@ interface IGetMatchObjWithSetting {
     createdAt?: Date,
     city?: string,
     country?: string,
-    settingId: number,
-    userId: number,
-    totalMatchScore: number,
-    pinnedPostId?: number,
     chatNotification: boolean
 }
 
@@ -119,7 +115,8 @@ interface IChatsResponse {
     seen: boolean,
     seenAt?: Date,
     createdAt: Date,
-    deletedAt: Date
+    deletedAt: Date,
+    hasMore: boolean
 }
 
 interface IGetChatsPayload {

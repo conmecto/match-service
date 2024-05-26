@@ -4,10 +4,31 @@ import moment from 'moment';
 import { getDbClient } from '../config';
 import { interfaces, enums } from '../utils';
 
-const getChats = async (payload: interfaces.IGetChatsPayload): Promise<interfaces.IChatsResponse[]> => {
+const getChats = async (payload: interfaces.IGetChatsPayload) => {
     const oneDayPastTime = moment().subtract(24, 'hours').toISOString(true);
-    const query = 'SELECT id, sender, receiver, match_id, message, type, seen, seen_at, created_at, deleted_at FROM chat WHERE match_id=$1 AND (sender=$2 OR receiver=$2) AND created_at > $3 AND deleted_at IS NULL ORDER BY created_at DESC OFFSET $4 LIMIT $5';
-    const params = [payload.matchId, payload.userId, oneDayPastTime, (payload.page - 1) * payload.perPage, payload.perPage];
+    const query = `
+        WITH total_count AS (
+            SELECT count(*) AS count 
+            FROM chat 
+            WHERE match_id=$1 AND (sender=$2 OR receiver=$2) AND created_at > $3 AND deleted_at IS NULL
+        ),
+        paginated_results AS (
+            SELECT id, sender, receiver, match_id, message, type, seen, seen_at, created_at, deleted_at, 
+            (SELECT count > $6 FROM total_count) AS has_more
+            FROM chat
+            WHERE match_id=$1 AND (sender=$2 OR receiver=$2) AND created_at > $3 AND deleted_at IS NULL 
+            ORDER BY created_at DESC 
+            OFFSET $4
+            LIMIT $5
+        )
+        SELECT * FROM paginated_results
+    `;
+    const skip = (payload.page - 1) * payload.perPage;
+    const countSkip = payload.page * payload.perPage;
+    const params = [
+        payload.matchId, payload.userId, oneDayPastTime, skip, 
+        payload.perPage, countSkip
+    ];
     let res: QueryResult | null = null;
     const client = await getDbClient();
     try {
@@ -24,6 +45,7 @@ const getChats = async (payload: interfaces.IGetChatsPayload): Promise<interface
             seenAt: chat['seen_at'],
             createdAt: chat['created_at'],
             deletedAt: chat['deleted_at'],
+            hasMore: chat['has_more']
         }
     }) : [];
 }
