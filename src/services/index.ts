@@ -18,6 +18,7 @@ import blockUser from './blockUser';
 import logger from './logger';
 import fetchUserMatches from './fetchUserMatches';
 import addUploadUrlRequest from './addUploadUrlRequest';
+import reportChatMessage from './reportChatMessage';
 
 export {
     CustomError,
@@ -39,5 +40,6 @@ export {
     blockUser,
     logger,
     fetchUserMatches,
-    addUploadUrlRequest
+    addUploadUrlRequest,
+    reportChatMessage
 }

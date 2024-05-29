@@ -10,13 +10,13 @@ const getChats = async (payload: interfaces.IGetChatsPayload) => {
         WITH total_count AS (
             SELECT count(*) AS count 
             FROM chat 
-            WHERE match_id=$1 AND (sender=$2 OR receiver=$2) AND created_at > $3 AND deleted_at IS NULL
+            WHERE match_id=$1 AND (sender=$2 OR receiver=$2) AND created_at > $3 AND reported=false AND deleted_at IS NULL
         ),
         paginated_results AS (
-            SELECT id, sender, receiver, match_id, message, type, seen, seen_at, created_at, deleted_at, 
+            SELECT id, sender, receiver, match_id, message, type, seen, seen_at, created_at, deleted_at, location, 
             (SELECT count > $6 FROM total_count) AS has_more
             FROM chat
-            WHERE match_id=$1 AND (sender=$2 OR receiver=$2) AND created_at > $3 AND deleted_at IS NULL 
+            WHERE match_id=$1 AND (sender=$2 OR receiver=$2) AND created_at > $3 AND reported=false AND deleted_at IS NULL 
             ORDER BY created_at DESC 
             OFFSET $4
             LIMIT $5

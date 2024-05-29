@@ -1,5 +1,6 @@
 import { Server, IncomingMessage } from 'http';
 import { parse } from 'url';
+import { omit } from 'lodash';
 import { WebSocketServer, WebSocket, Server as SocketServer } from 'ws';
 import { constants, enums, Environments, helpers } from '../utils';
 import { getMatchById, logger } from '../services';
@@ -56,17 +57,19 @@ const createChatSocket = async (server: Server) => {
         }
 
         ws.on('message', (data) => {
-            const { message, event }: { 
-                message: string, event: string
-            } = JSON.parse(data?.toString());
+            const parsedData: Record<string, any> = JSON.parse(data?.toString());
+            const event = parsedData?.event;
+            const message = parsedData?.message;
             const { matchedUserId } = chatSocketClients.get(chatSocketKey) as savedClient;
+
             if (event === enums.ChatSocketEvents.SAVE_MESSAGE) {
                 pubClient.publish(Environments.redis.channels.saveMessage, Buffer.from(
                     JSON.stringify({
                         message, 
                         userId,
                         matchedUserId, 
-                        matchId
+                        matchId,
+                        event
                     })
                 ));
                 const matchedUserChatSocketKey = getChatSocketKey(matchId?.toString(), matchedUserId?.toString());
@@ -83,6 +86,45 @@ const createChatSocket = async (server: Server) => {
                         updatedAt: new Date(), 
                         deletedAt: null,
                         seen: false
+                    }), (error) => {
+                        if (error) {
+                            logger('Chat message send socket error: ' + error?.toString());
+                        }
+                    });
+                }
+            } else if (event === enums.ChatSocketEvents.SAVE_FILE) {
+                const fileData = omit(parsedData, ['event', 'message', 'matchId', 'userId', 'matchedUserId']);
+                fileData.bucket = Environments.aws.s3BucketChat;
+                pubClient.publish(Environments.redis.channels.saveMessage, Buffer.from(
+                    JSON.stringify({
+                        message, 
+                        userId,
+                        matchedUserId, 
+                        matchId,
+                        event,
+                        fileData
+                    })
+                ));
+                const matchedUserChatSocketKey = getChatSocketKey(matchId?.toString(), matchedUserId?.toString());
+                if (chatSocketClients.has(matchedUserChatSocketKey)) {
+                    const { ws: receiverSocket } = <savedClient>chatSocketClients.get(matchedUserChatSocketKey);
+                    receiverSocket.send(JSON.stringify({ 
+                        event: enums.ChatSocketEvents.MESSAGE_RECEIVED,
+                        sender: userId, 
+                        receiver: matchedUserId, 
+                        matchId,
+                        type: 'image',
+                        message,
+                        createdAt: new Date(), 
+                        updatedAt: new Date(), 
+                        deletedAt: null,
+                        seen: false,
+                        location: fileData.location,
+                        name: fileData.name,
+                        mimetype: fileData.mimetype,
+                        size: fileData.size, 
+                        height: fileData.height,
+                        width: fileData.width
                     }), (error) => {
                         if (error) {
                             logger('Chat message send socket error: ' + error?.toString());

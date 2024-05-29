@@ -2,7 +2,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
 import { 
     getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats,
-    endMatch, markChatsRead, getUserMatches, generateSignedUrl
+    endMatch, markChatsRead, getUserMatches, generateSignedUrl, reportChat
 } from '../controllers';
 import { authenticateRequest } from '../middlewares';
 
@@ -93,6 +93,16 @@ matchRouter.post('/:matchId/chats/signed-url', authenticateRequest, async (req: 
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await generateSignedUrl(filterRequest);
         res.status(enums.StatusCodes.CREATED).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
+matchRouter.put('/:matchId/chats/:chatId/report', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await reportChat(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);
     }

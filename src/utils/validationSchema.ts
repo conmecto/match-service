@@ -48,15 +48,21 @@ const markChatsReadSchema = Joi.object({
     userId: Joi.number().required(),
 });
 
-const generateUploadUrlSchema =  Joi.object({
+const generateUploadUrlSchema = Joi.object({
     matchId: Joi.number().required(),
     userId: Joi.number().required(),
     fileName: Joi.string().required(),
     contentType: Joi.string().valid(...ALLOWED_IMAGE_TYPES).required()
 });
 
+const reportChatSchema = Joi.object({
+    matchId: Joi.number().required(),
+    userId: Joi.number().required(),
+    chatId: Joi.number().required()
+});
+
 export { 
     paramsUserIdSchema, topMatchesQuerySchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
     pastMatchesQuerySchema, paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema,
-    generateUploadUrlSchema
+    generateUploadUrlSchema, reportChatSchema
 };
