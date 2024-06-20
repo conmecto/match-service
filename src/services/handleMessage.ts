@@ -18,7 +18,7 @@ export const handleAddSettingsMessage = async (message: any, channel: string) =>
                 throw new Error();
             }
             await addUserInMatchQueue(userId);
-            await setKey(constants.CHECK_USER_MATCHED_KEY + userId, 'false');
+            // await setKey(constants.CHECK_USER_MATCHED_KEY + userId, 'false');
             await pubClient.publish(Environments.redis.channels.processMatchQueue, enums.Messages.MATCH_QUEUE_UPDATED);
         }
     } catch(error) {

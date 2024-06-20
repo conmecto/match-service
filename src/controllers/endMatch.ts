@@ -19,9 +19,9 @@ const endMatch = async (req: interfaces.IRequestObject) => {
     }
     clearChatSocketClient(matchId, res.userId1?.toString());
     clearChatSocketClient(matchId, res.userId2?.toString());
-    const queueUser1 = await addUserInMatchQueue(res.userId1, false);
-    const queueUser2 = await addUserInMatchQueue(res.userId2, false);
-    await updateSettingPostEndMatch([res.userId1, res.userId2], [queueUser1 || 1, queueUser2 || 1]);
+    // const queueUser1 = await addUserInMatchQueue(res.userId1, false);
+    // const queueUser2 = await addUserInMatchQueue(res.userId2, false);
+    // await updateSettingPostEndMatch([res.userId1, res.userId2], [queueUser1 || 1, queueUser2 || 1]);
     // await Promise.all([
     //     cacheClient.setKey(constants.CHECK_USER_MATCHED_KEY + res.userId1, 'false'),
     //     cacheClient.setKey(constants.CHECK_USER_MATCHED_KEY + res.userId2, 'false')
