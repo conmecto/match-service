@@ -23,10 +23,9 @@ const getChats = async (payload: interfaces.IGetChatsPayload) => {
         )
         SELECT * FROM paginated_results
     `;
-    const skip = (payload.page - 1) * payload.perPage;
-    const countSkip = payload.page * payload.perPage;
+    const countSkip = payload.skip + payload.perPage;
     const params = [
-        payload.matchId, payload.userId, oneDayPastTime, skip, 
+        payload.matchId, payload.userId, oneDayPastTime, payload.skip, 
         payload.perPage, countSkip
     ];
     let res: QueryResult | null = null;

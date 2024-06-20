@@ -32,6 +32,7 @@ const paramsMatchIdSchema = Joi.object({
 });
 
 const queryParamsUserChatsSchema = Joi.object({
+    skip: Joi.number().required(),
     userId: Joi.number().required(),
     page: Joi.number().required().min(1),
     perPage: Joi.number().required().min(1).max(10),

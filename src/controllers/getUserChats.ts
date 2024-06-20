@@ -5,7 +5,7 @@ const getUserChats = async (req: interfaces.IRequestObject) => {
     await validationSchema.paramsMatchIdSchema.validateAsync(req.params);
     await validationSchema.queryParamsUserChatsSchema.validateAsync(req.query);
     const { matchId } = req.params; 
-    const { userId, page, perPage } = req.query;
+    const { userId, page, perPage, skip } = req.query;
     const user = req.user;
     if (!user) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
@@ -17,6 +17,7 @@ const getUserChats = async (req: interfaces.IRequestObject) => {
         matchId: Number(matchId), 
         userId:  Number(userId), 
         page: Number(page), 
+        skip: Number(skip),
         perPage: Number(perPage) 
     });
     return {

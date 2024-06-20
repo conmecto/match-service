@@ -123,6 +123,7 @@ interface IGetChatsPayload {
     matchId: number,
     userId: number,
     page: number,
+    skip: number,
     perPage: number,
 }
 
