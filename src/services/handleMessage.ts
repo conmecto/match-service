@@ -21,8 +21,12 @@ export const handleAddSettingsMessage = async (message: any, channel: string) =>
             // await setKey(constants.CHECK_USER_MATCHED_KEY + userId, 'false');
             await pubClient.publish(Environments.redis.channels.processMatchQueue, enums.Messages.MATCH_QUEUE_UPDATED);
         }
-    } catch(error) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + errorString);
         await pubClient.publish(Environments.redis.channels.userCreatedMatchError, message);
     }
 }

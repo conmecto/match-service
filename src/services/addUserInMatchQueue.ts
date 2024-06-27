@@ -26,8 +26,12 @@ const addUserInMatchQueue = async (userId: number, updateCurrentQueue: boolean =
         if (updateCurrentQueue) {
             await updateUserCurrentQueue(userId, 1);
         }
-    } catch(error) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR + errorString);
     } 
 }
 

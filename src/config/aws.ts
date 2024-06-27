@@ -24,8 +24,12 @@ const checkOrCreateBucket = async (bucket: string) => {
         });            
         const res = await s3Client.send(command);
         checkBucketExists = true; 
-    } catch(error) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.AWS_CHECK_BUCKET_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Match Service: ' + enums.PrefixesForLogs.AWS_CHECK_BUCKET_ERROR + errorString);
     }
 
     try {
@@ -49,8 +53,12 @@ const checkOrCreateBucket = async (bucket: string) => {
         if (createRes?.Location) {
             await s3Client.send(updateBucketCommand);
         }
-    } catch(error) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Match Service: ' + enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + errorString);
     }
 };
 
@@ -84,8 +92,12 @@ const generatePresignedUploadUrl = async ({ matchId, userId, fileName, contentTy
         };
         const { url, fields } = await createPresignedPost(s3Client, postOptions);
         return { url, fields };
-    } catch(error) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.AWS_GENERATE_UPLOAD_URL_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Match Service: ' + enums.PrefixesForLogs.AWS_GENERATE_UPLOAD_URL_ERROR + errorString);
     }
 }
 

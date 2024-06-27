@@ -8,8 +8,12 @@ const setKey = async (key: string, value: string): Promise<boolean | null> => {
         if (cacheClient.isReady) {
             res = await cacheClient.set(key.toLocaleLowerCase(), value);
         } 
-    } catch(err) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_SET_OBJECT + err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_SET_OBJECT + errorString);
     }
     return Boolean(res);
 }
@@ -20,8 +24,12 @@ const getKey = async (key: string): Promise<string | null> => {
         if (cacheClient.isReady) {
             value = await cacheClient.get(key);
         }
-    } catch(err) {
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_GET_OBJECT + err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_GET_OBJECT + errorString);
     }
     return value;
 }
