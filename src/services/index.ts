@@ -19,6 +19,7 @@ import logger from './logger';
 import fetchUserMatches from './fetchUserMatches';
 import addUploadUrlRequest from './addUploadUrlRequest';
 import reportChatMessage from './reportChatMessage';
+import userMatchesSummary from './userMatchesSummary';
 
 export {
     CustomError,
@@ -41,5 +42,6 @@ export {
     logger,
     fetchUserMatches,
     addUploadUrlRequest,
-    reportChatMessage
+    reportChatMessage,
+    userMatchesSummary
 }

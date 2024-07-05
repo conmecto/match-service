@@ -154,9 +154,19 @@ interface IGenerateUploadUrlBody {
     fileName: string, 
     contentType: string 
 }
+
+interface IUserMatchSummaryObj {
+    id: number,
+    matchId: number,
+    userId: number,
+    activeMatchesCount: number,
+    totalMatchScore: number,
+    matchDurationHours: number,
+    score: number
+}
   
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
     IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
-    ICustomerRequest, IGetMatchObjWithSetting, IGenerateUploadUrlBody
+    ICustomerRequest, IGetMatchObjWithSetting, IGenerateUploadUrlBody, IUserMatchSummaryObj
 };
