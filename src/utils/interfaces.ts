@@ -64,6 +64,8 @@ interface IGetSettingObject {
     minSearchAge: number,
     maxSearchAge: number,
     currentQueue?: number,
+    activeMatchesCount?: number,
+    maxMatchesAllowed?: number,
     isMatched?: boolean
 }
 
@@ -165,8 +167,19 @@ interface IUserMatchSummaryObj {
     score: number
 }
   
+interface IGetUserMatchSettingObject {
+    id: number,
+    userId: number,
+    searchFor: string,
+    searchIn: string,
+    minSearchAge: number,
+    maxSearchAge: number,
+    activeMatchesCount: number,
+    maxMatchesAllowed: number
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
     IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
-    ICustomerRequest, IGetMatchObjWithSetting, IGenerateUploadUrlBody, IUserMatchSummaryObj
+    ICustomerRequest, IGetMatchObjWithSetting, IGenerateUploadUrlBody, IUserMatchSummaryObj, IGetUserMatchSettingObject
 };

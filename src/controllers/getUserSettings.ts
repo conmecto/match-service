@@ -1,7 +1,7 @@
 import { interfaces, validationSchema, enums } from '../utils';
 import { CustomError, getUserMatchSetting } from '../services';
 
-const getUserSettings = async (req: interfaces.IRequestObject): Promise<interfaces.IGetSettingObject> => {
+const getUserSettings = async (req: interfaces.IRequestObject) => {
     await validationSchema.paramsUserMatchSettingSchema.validateAsync(req.params);
     const userId = Number(req.params['userId']);
     const user = req.user;
