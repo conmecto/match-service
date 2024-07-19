@@ -31,7 +31,7 @@ const addUserInMatchQueue = async (userId: number, updateCurrentQueue: boolean =
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR + errorString);
     } 
 }
 

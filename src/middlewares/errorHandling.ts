@@ -7,13 +7,13 @@ export const errorHandler: ErrorRequestHandler = async (error: any, req: Request
     let newError: CustomError;
     if (error instanceof CustomError) {
         const errorObj = error.loggingErrorObject;
-        await logger('Match Service: ' + 'Error handler: ' + JSON.stringify(errorObj));
+        await logger('Error handler: ' + JSON.stringify(errorObj));
         newError = error;
     } else if (error instanceof ValidationError) {
-        await logger('Match Service: ' + 'Error handler: ' + error.message);
+        await logger('Error handler: ' + error.message);
         newError = new CustomError(enums.StatusCodes.BAD_REQUEST, error.message, enums.ErrorCodes.VALIDATION_ERROR);
     } else {
-        await logger('Match Service: ' + 'Error handler: ' + JSON.stringify({
+        await logger('Error handler: ' + JSON.stringify({
             message: error?.toString(),
             stack: error?.stack 
         }));

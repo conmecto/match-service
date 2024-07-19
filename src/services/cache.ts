@@ -13,7 +13,7 @@ const setKey = async (key: string, value: string): Promise<boolean | null> => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_SET_OBJECT + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_SET_OBJECT + errorString);
     }
     return Boolean(res);
 }
@@ -29,7 +29,7 @@ const getKey = async (key: string): Promise<string | null> => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_GET_OBJECT + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_GET_OBJECT + errorString);
     }
     return value;
 }

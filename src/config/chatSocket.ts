@@ -37,7 +37,7 @@ const verifyClient = (info, callback) => {
         verifyAuthToken(accessToken).then(res => {
             callback(res.userId === Number(userId));
         }).catch((error) => {
-            logger(`Match Service: Chat Verify Token Error UserId ${userId}: ` + error?.toString());
+            logger(`Chat Verify Token Error UserId ${userId}: ` + error?.toString());
             callback(false);
         });
     } else {    
@@ -142,19 +142,19 @@ const createChatSocket = async (server: Server) => {
         });
 
         ws.on('error', (error) => {
-            logger('Match Service: Chat socket error: ' + error?.toString());
+            logger('Chat socket error: ' + error?.toString());
             chatSocketClients.delete(chatSocketKey);
             ws.close();
         });
     });
 
     webSocketServer.on('close', () => {
-        logger('Match Service: Socket server is closed');
+        logger('Socket server is closed');
         chatSocketClients.clear();
     });
 
     webSocketServer.on('error', (error) => {
-        logger('Match Service: Socket server error: ' + error?.toString());
+        logger('Socket server error: ' + error?.toString());
         chatSocketClients.clear();
     });
 }
