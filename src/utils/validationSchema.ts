@@ -6,16 +6,6 @@ const paramsUserIdSchema = Joi.object({
     userId: Joi.number().required()
 });
 
-const topMatchesQuerySchema = Joi.object({
-    count: Joi.number().optional().default(10),
-    country: Joi.number().valid(...Object.values(Country)).required().default(Country.INDIA)
-});
-
-const pastMatchesQuerySchema = Joi.object({
-    count: Joi.number().optional().default(10),
-    userId: Joi.number().required()
-});
-
 const paramsUserMatchSettingSchema = Joi.object({
     userId: Joi.number().required()
 });
@@ -63,7 +53,7 @@ const reportChatSchema = Joi.object({
 });
 
 export { 
-    paramsUserIdSchema, topMatchesQuerySchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
-    pastMatchesQuerySchema, paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema,
+    paramsUserIdSchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
+    paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema,
     generateUploadUrlSchema, reportChatSchema
 };
