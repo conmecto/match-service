@@ -7,8 +7,9 @@ import getUserMatches from './getUserMatches';
 import generateSignedUrl from './generateSignedUrl';
 import reportChat from './reportChat';
 import getUserMatchesSummary from './getUserMatchesSummary';
+import updateUserLocation from './updateUserLocation';
 
 export { 
-    getUserSettings, updateUserSettings, getUserChats, endMatch,
-    markChatsRead, getUserMatches, generateSignedUrl, reportChat, getUserMatchesSummary
+    getUserSettings, updateUserSettings, getUserChats, endMatch, markChatsRead, 
+    getUserMatches, generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation
 }
