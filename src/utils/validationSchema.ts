@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { Gender, Country, SearchFor } from './enums';
+import { LocationAccess, SearchFor, SearchArea } from './enums';
 import { ALLOWED_IMAGE_TYPES } from './constants';
 
 const paramsUserIdSchema = Joi.object({
@@ -14,8 +14,8 @@ const updateUserMatchSettingSchema = Joi.object({
     minSearchAge: Joi.number().optional().min(18).max(69),
     maxSearchAge: Joi.number().optional().max(70).min(19),
     searchFor: Joi.string().valid(...Object.values(SearchFor)).optional(),
-    searchIn: Joi.string().optional()
-});
+    searchArea: Joi.string().valid(...Object.values(SearchArea)).optional()
+}).min(1);
 
 const paramsMatchIdSchema = Joi.object({
     matchId: Joi.number().required()
@@ -52,8 +52,14 @@ const reportChatSchema = Joi.object({
     chatId: Joi.number().required()
 });
 
+const updateUserLocationSchema = Joi.object({
+    lat: Joi.number().min(-90).max(90).required(),
+    long: Joi.number().min(-180).max(180).required(),
+    locationAccess: Joi.string().valid(...Object.values(LocationAccess)).optional(),
+});
+
 export { 
     paramsUserIdSchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
     paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema,
-    generateUploadUrlSchema, reportChatSchema
+    generateUploadUrlSchema, reportChatSchema, updateUserLocationSchema
 };

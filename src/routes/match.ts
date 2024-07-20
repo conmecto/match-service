@@ -1,8 +1,8 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
 import { 
-    getTopMatches, getUserSettings, updateUserSettings, getPastMatches, getUserChats,
-    endMatch, markChatsRead, getUserMatches, generateSignedUrl, reportChat, getUserMatchesSummary
+    getUserSettings, updateUserSettings, getUserChats, endMatch, markChatsRead, getUserMatches, 
+    generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation
 } from '../controllers';
 import { authenticateRequest } from '../middlewares';
 
@@ -38,30 +38,20 @@ matchRouter.get('/users/:userId', authenticateRequest, async (req: Request, res:
     }
 });
 
+matchRouter.put('/users/:userId/location', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await updateUserLocation(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
 matchRouter.get('/users/:userId/summary', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserMatchesSummary(filterRequest);
-        res.status(enums.StatusCodes.OK).send(controllerResponse);    
-    } catch(err) {
-        next(err);
-    }
-});
-
-matchRouter.get('/top', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const filterRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await getTopMatches(filterRequest);
-        res.status(enums.StatusCodes.OK).send(controllerResponse);    
-    } catch(err) {
-        next(err);
-    }
-});
-
-matchRouter.get('/past', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const filterRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await getPastMatches(filterRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);

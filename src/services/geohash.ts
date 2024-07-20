@@ -51,11 +51,13 @@ const updateUserGeohashCache = async ({ userId, lat, long }: interfaces.IUpdateU
     const key = userId + ':geohash';
     const oldGeohash = await getKey(key);
     if (geohash && oldGeohash !== geohash) {
-        await cacheClient.SADD(geohash, userId?.toString());
+        const client = await cacheClient.MULTI();
+        client.SADD(geohash, userId?.toString());
         if (oldGeohash) {
-            await cacheClient.SREM(oldGeohash, userId?.toString());
+            client.SREM(oldGeohash, userId?.toString());
         }
-        await cacheClient.set(key, geohash);
+        client.set(key, geohash);
+        await client.EXEC();
         return geohash;
     }
 }

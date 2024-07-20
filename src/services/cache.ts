@@ -34,5 +34,5 @@ const getKey = async (key: string): Promise<string | null> => {
     return value;
 }
 
-export { setKey, getKey }
+export { setKey, getKey, cacheClient }
 
