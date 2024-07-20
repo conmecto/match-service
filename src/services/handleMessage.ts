@@ -1,24 +1,43 @@
 import { redisClient1 as pubClient } from '../config';
-import { Environments, helpers, enums, constants } from '../utils';
+import { Environments, helpers, enums, interfaces } from '../utils';
 import addSetting from './addSetting';
 import addUserInMatchQueue from './addUserInMatchQueue';
-import { setKey } from './cache';
+import { updateUserGeohashCache } from './geohash';
 import logger from './logger';
 
 export const handleAddSettingsMessage = async (message: any, channel: string) => {
     try {
-        const { dob, id: userId, gender, city, country, searchIn, searchFor } = JSON.parse(message);
-        const checkChannel = Environments.redis.channels.userCreatedMatch;
-        const checkFields = dob && userId && city && country && searchIn && searchFor;
+        const { dob, id: userId, gender, country, searchFor, lat, long, locationAccess } = JSON.parse(message);
+        const checkChannel = Environments.redis.channels.userCreatedMatch === channel;
+        const checkFields = dob && userId && country && searchFor;
         if (checkChannel && checkFields) {
             const age = helpers.getAge(dob);
-            const insertDoc = { age, city, country, gender, maxSearchAge: age + (age < 70 ? 1 : 0), minSearchAge: age + (age > 18 ? -1 : 0), searchFor, searchIn, userId };
-            const res = await addSetting(insertDoc);
+            const settingDoc = { 
+                age, 
+                gender, 
+                maxSearchAge: age + (age < 70 ? 1 : 0), 
+                minSearchAge: age + (age > 18 ? -1 : 0), 
+                searchFor, 
+                userId 
+            };
+            const locationDoc: interfaces.ICreateLocationSettingObject = {
+                country,
+                userId,
+                locationAccess
+            }
+            if (!(isNaN(lat) || isNaN(long))) {
+                locationDoc.lat = lat;
+                locationDoc.long = long;
+                const geohash = await updateUserGeohashCache({ userId, lat, long });
+                if (geohash) {
+                    locationDoc.geohash = geohash;
+                }
+            }
+            const res = await addSetting(settingDoc, locationDoc);
             if (!res) {
                 throw new Error();
             }
             await addUserInMatchQueue(userId);
-            // await setKey(constants.CHECK_USER_MATCHED_KEY + userId, 'false');
             await pubClient.publish(Environments.redis.channels.processMatchQueue, enums.Messages.MATCH_QUEUE_UPDATED);
         }
     } catch(error: any) {
@@ -26,7 +45,7 @@ export const handleAddSettingsMessage = async (message: any, channel: string) =>
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Match Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + errorString);
         await pubClient.publish(Environments.redis.channels.userCreatedMatchError, message);
     }
 }

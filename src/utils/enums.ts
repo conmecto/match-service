@@ -14,6 +14,18 @@ export enum SearchFor {
     EVERYONE = 'everyone'
 }
 
+export enum SearchArea {
+    CLOSE = 'close',
+    MID = 'mid',
+    DISTANT = 'distant'
+}
+
+export enum LocationAccess {
+    YES = 'yes',
+    NO = 'no',
+    ONCE = 'once'
+}
+
 export enum StatusCodes {
     OK = 200,
     CREATED = 201,
@@ -117,14 +129,12 @@ export enum SocketEvents {
     MATCH_CREATED = 'match-created'
 }
 
-export enum SettingFieldsDbName {
+export enum FieldsDbName {
     'id' = 'id',
     'userId' = 'user_id',
     'user_id' = 'userId',
     'searchFor' = 'search_for',
     'search_for' = 'searchFor',
-    'searchIn' = 'search_in',
-    'search_in' = 'searchIn',
     'minSearchAge' = 'min_search_age',
     'min_search_age' = 'minSearchAge',
     'maxSearchAge' = 'max_search_age',
@@ -134,7 +144,15 @@ export enum SettingFieldsDbName {
     'updatedAt' = 'updated_at',
     'updated_at' = 'updatedAt',
     'currentQueue' = 'current_queue',
-    'current_queue' = 'currentQueue'
+    'current_queue' = 'currentQueue',
+    'location_access' = 'locationAccess',
+    'locationAccess' = 'location_access',
+    'country' = 'country',
+    'geohash' = 'geohash',
+    'lat' = 'lat',
+    'long' = 'long',
+    'search_area' = 'searchArea',
+    'searchArea' = 'search_area'
 }
 
 export enum ChatSocketEvents {
