@@ -4,10 +4,11 @@ import { interfaces, helpers } from '../utils';
 
 const getUserMatchSetting = async (userId: number) => {
     const query = `
-        SELECT id, user_id, min_search_age, max_search_age, search_for, 
-        search_in, active_matches_count, max_matches_allowed 
-        FROM setting 
-        WHERE user_id=$1 AND deleted_at IS NULL
+        SELECT s.id, s.user_id, s.min_search_age, s.max_search_age, s.search_for, 
+        s.active_matches_count, s.max_matches_allowed, ls.search_area, ls.location_access
+        FROM setting s 
+        LEFT JOIN location_setting ls ON s.user_id=ls.user_id
+        WHERE s.user_id=$1 AND s.deleted_at IS NULL
     `;
     const params = [userId];
     let res: QueryResult | null = null;

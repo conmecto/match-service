@@ -43,13 +43,19 @@ interface ICityObject {
 interface ICreateSettingObject {
     userId: number,
     age: number,
-    city: string,
-    country: string, 
     searchFor: string,
-    searchIn: string,
     gender: string,
     minSearchAge: number,
     maxSearchAge: number
+}
+
+interface ICreateLocationSettingObject {
+    country: string, 
+    userId: number,
+    locationAccess?: string,
+    lat?: number,
+    long?: number,
+    geohash?: string
 }
 
 interface IGetSettingObject {
@@ -59,7 +65,6 @@ interface IGetSettingObject {
     city?: string,
     country?: string, 
     searchFor: string,
-    searchIn: string,
     gender?: string,
     minSearchAge: number,
     maxSearchAge: number,
@@ -102,7 +107,10 @@ interface IUpdateSettingObj {
     minSearchAge?: number,
     maxSearchAge?: number,
     searchFor?: string,
-    searchIn?: string, 
+}
+
+interface IUpdateLocationSetting {
+    searchArea?: string
 }
 
 interface IChatsResponse {
@@ -171,15 +179,28 @@ interface IGetUserMatchSettingObject {
     id: number,
     userId: number,
     searchFor: string,
-    searchIn: string,
     minSearchAge: number,
     maxSearchAge: number,
     activeMatchesCount: number,
-    maxMatchesAllowed: number
+    maxMatchesAllowed: number,
+    searchArea: string,
+    locationAccess: string
+}
+
+interface IUpdateUserGeohash {
+    lat: number,
+    long: number,
+    geohash?: string,
+    locationAccess?: string
+}
+
+interface IUpdateUserGeohashCache extends IUpdateUserGeohash {
+    userId: number
 }
 
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
     IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
-    ICustomerRequest, IGetMatchObjWithSetting, IGenerateUploadUrlBody, IUserMatchSummaryObj, IGetUserMatchSettingObject
+    ICustomerRequest, IGetMatchObjWithSetting, IGenerateUploadUrlBody, IUserMatchSummaryObj, IGetUserMatchSettingObject,
+    ICreateLocationSettingObject, IUpdateLocationSetting, IUpdateUserGeohash, IUpdateUserGeohashCache
 };
