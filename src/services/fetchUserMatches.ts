@@ -6,7 +6,7 @@ import { interfaces, enums } from '../utils';
 const fetchUserMatches = async (userId: number): Promise<interfaces.IGetMatchObjWithSetting[]> => {
     const query = `
         WITH latest_message AS (
-            SELECT id, match_id,
+            SELECT id, match_id, created_at
             ROW_NUMBER() OVER (PARTITION BY c.match_id ORDER BY c.created_at DESC) rn
             FROM chat c
             WHERE c.receiver=$1 AND c.seen=false AND c.deleted_at IS NULL
@@ -16,11 +16,12 @@ const fetchUserMatches = async (userId: number): Promise<interfaces.IGetMatchObj
             FROM match m 
             WHERE (m.user_id_1=$1 OR m.user_id_2=$1) AND m.ended=false 
             ORDER BY m.created_at DESC 
-            LIMIT 2
+            LIMIT 10
         )
         SELECT tm.*, lm.id
-        FROM top_matches tm
+        FROM top_matches tm 
         LEFT JOIN latest_message lm ON lm.match_id=tm.match_id AND lm.rn=1
+        ORDER BY lm.created_at DESC
     `;
     const params = [userId];
     let res: QueryResult | null = null;
