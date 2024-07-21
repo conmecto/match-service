@@ -1,5 +1,5 @@
-import { interfaces, validationSchema, enums } from '../utils';
-import { CustomError, updateLocationSetting, updateUserGeohashCache } from '../services';
+import { interfaces, validationSchema, enums, constants } from '../utils';
+import { CustomError, updateLocationSetting, updateUserGeohashCache, encodeGeoLocation } from '../services';
 
 const updateUserLocation = async (req: interfaces.IRequestObject) => {
     await validationSchema.updateUserLocationSchema.validateAsync(req.body);
@@ -12,12 +12,15 @@ const updateUserLocation = async (req: interfaces.IRequestObject) => {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
     const { latitude: lat, longitude: long } = req.body;
-    const geohash = await updateUserGeohashCache({ userId, lat, long });
-    const updateObj: interfaces.IUpdateUserGeohash = { lat, long };
-    if (geohash) {
-        updateObj.geohash = geohash;
+    const geohash = encodeGeoLocation(lat, long, constants.GEOHASH_PRECISION);
+    if (!geohash) {
+        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
-    await updateLocationSetting(userId, updateObj);
+    const updateObj: interfaces.IUpdateUserGeohash = { lat, long, geohash };
+    await Promise.all([
+        updateLocationSetting(userId, updateObj),
+        updateUserGeohashCache({ userId, lat, long, geohash })
+    ]);
     return {
         message: 'Location updated successfully'
     }

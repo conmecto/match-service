@@ -17,7 +17,7 @@ import fetchUserMatches from './fetchUserMatches';
 import addUploadUrlRequest from './addUploadUrlRequest';
 import reportChatMessage from './reportChatMessage';
 import userMatchesSummary from './userMatchesSummary';
-import { updateUserGeohashCache } from './geohash';
+import { updateUserGeohashCache, encodeGeoLocation } from './geohash';
 import updateLocationSetting from './updateLocationSetting';
 
 export {
@@ -41,5 +41,6 @@ export {
     reportChatMessage,
     userMatchesSummary,
     updateUserGeohashCache,
-    updateLocationSetting
+    updateLocationSetting,
+    encodeGeoLocation
 }

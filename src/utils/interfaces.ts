@@ -177,16 +177,15 @@ interface IGetUserMatchSettingObject {
     searchFor: string,
     minSearchAge: number,
     maxSearchAge: number,
-    activeMatchesCount: number,
-    maxMatchesAllowed: number,
     searchArea: string,
-    geohash: string
+    geohash?: string,
+    country: string
 }
 
 interface IUpdateUserGeohash {
     lat: number,
     long: number,
-    geohash?: string,
+    geohash: string,
 }
 
 interface IUpdateUserGeohashCache extends IUpdateUserGeohash {

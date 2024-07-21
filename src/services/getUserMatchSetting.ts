@@ -5,7 +5,7 @@ import { interfaces, helpers } from '../utils';
 const getUserMatchSetting = async (userId: number) => {
     const query = `
         SELECT s.id, s.user_id, s.min_search_age, s.max_search_age, s.search_for, 
-        s.active_matches_count, s.max_matches_allowed, ls.search_area, ls.geohash
+        ls.search_area, ls.geohash, ls.country
         FROM setting s 
         LEFT JOIN location_setting ls ON s.user_id=ls.user_id
         WHERE s.user_id=$1 AND s.deleted_at IS NULL

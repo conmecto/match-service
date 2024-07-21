@@ -1,10 +1,10 @@
 import logger from './logger';
 import { getKey, cacheClient } from './cache';
-import { interfaces, constants } from '../utils';
+import { interfaces } from '../utils';
 
 const base32 = '0123456789bcdefghjkmnpqrstuvwxyz';
 
-const encode = (latitude: number, longitude: number, precision: number) => {
+const encodeGeoLocation = (latitude: number, longitude: number, precision: number) => {
     try {
         let findLong = true;
         let minLat = -90, maxLat = 90;
@@ -46,11 +46,10 @@ const encode = (latitude: number, longitude: number, precision: number) => {
     }
 } 
 
-const updateUserGeohashCache = async ({ userId, lat, long }: interfaces.IUpdateUserGeohashCache) => {
-    const geohash = encode(lat, long, constants.GEOHASH_PRECISION);
+const updateUserGeohashCache = async ({ userId, lat, long, geohash }: interfaces.IUpdateUserGeohashCache) => {
     const key = userId + ':geohash';
     const oldGeohash = await getKey(key);
-    if (geohash && oldGeohash !== geohash) {
+    if (geohash) {
         const client = await cacheClient.MULTI();
         client.SADD(geohash, userId?.toString());
         if (oldGeohash) {
@@ -62,4 +61,4 @@ const updateUserGeohashCache = async ({ userId, lat, long }: interfaces.IUpdateU
     }
 }
 
-export { updateUserGeohashCache }
+export { encodeGeoLocation, updateUserGeohashCache }
