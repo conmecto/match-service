@@ -51,11 +51,7 @@ interface ICreateSettingObject {
 
 interface ICreateLocationSettingObject {
     country: string, 
-    userId: number,
-    locationAccess?: string,
-    lat?: number,
-    long?: number,
-    geohash?: string
+    userId: number
 }
 
 interface IGetSettingObject {
@@ -184,14 +180,13 @@ interface IGetUserMatchSettingObject {
     activeMatchesCount: number,
     maxMatchesAllowed: number,
     searchArea: string,
-    locationAccess: string
+    geohash: string
 }
 
 interface IUpdateUserGeohash {
     lat: number,
     long: number,
     geohash?: string,
-    locationAccess?: string
 }
 
 interface IUpdateUserGeohashCache extends IUpdateUserGeohash {

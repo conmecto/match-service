@@ -1,6 +1,6 @@
 import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
-import { interfaces, enums } from '../utils';
+import { interfaces } from '../utils';
 
 const addSetting = async (
         createSettingObj: interfaces.ICreateSettingObject, 
@@ -13,17 +13,12 @@ const addSetting = async (
         RETURNING setting.id
     `;
     const params1 = [...Object.keys(createSettingObj).sort().map(key => createSettingObj[key])];
-
-    const locationKeys = Object.keys(locationSettingObj);
-    const locationSortedKeys = locationKeys.sort();
-    const params2 = [...locationSortedKeys.map(key => locationSettingObj[key])];
-    const keys = locationSortedKeys.map(key => enums.FieldsDbName[key]).join(',');
-    const values = locationKeys.map((key, index) => `$${index + 1}`).join(',');
-    let query2 = `
+    const query2 = `
         INSERT INTO 
-        location_setting(${keys}) 
-        VALUES (${values}) RETURNING location_setting.id
+        location_setting(user_id, country) 
+        VALUES ($1, $2) RETURNING location_setting.id
     `;
+    const params2 = [locationSettingObj.userId, locationSettingObj.country];
     let res: QueryResult | null = null;
     const client = await getDbClient();
     try {

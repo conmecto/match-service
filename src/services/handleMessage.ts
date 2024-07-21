@@ -7,7 +7,7 @@ import logger from './logger';
 
 export const handleAddSettingsMessage = async (message: any, channel: string) => {
     try {
-        const { dob, id: userId, gender, country, searchFor, lat, long, locationAccess } = JSON.parse(message);
+        const { dob, id: userId, gender, country, searchFor } = JSON.parse(message);
         const checkChannel = Environments.redis.channels.userCreatedMatch === channel;
         const checkFields = dob && userId && country && searchFor;
         if (checkChannel && checkFields) {
@@ -23,15 +23,6 @@ export const handleAddSettingsMessage = async (message: any, channel: string) =>
             const locationDoc: interfaces.ICreateLocationSettingObject = {
                 country,
                 userId,
-                locationAccess
-            }
-            if (!(isNaN(lat) || isNaN(long))) {
-                locationDoc.lat = lat;
-                locationDoc.long = long;
-                const geohash = await updateUserGeohashCache({ userId, lat, long });
-                if (geohash) {
-                    locationDoc.geohash = geohash;
-                }
             }
             const res = await addSetting(settingDoc, locationDoc);
             if (!res) {

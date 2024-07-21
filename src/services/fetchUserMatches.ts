@@ -1,12 +1,11 @@
 import { QueryResult } from 'pg';
-import { omit } from 'lodash';
 import { getDbClient } from '../config';
-import { interfaces, enums } from '../utils';
+import { interfaces } from '../utils';
 
 const fetchUserMatches = async (userId: number): Promise<interfaces.IGetMatchObjWithSetting[]> => {
     const query = `
         WITH latest_message AS (
-            SELECT id, match_id, created_at
+            SELECT id, match_id, created_at,
             ROW_NUMBER() OVER (PARTITION BY c.match_id ORDER BY c.created_at DESC) rn
             FROM chat c
             WHERE c.receiver=$1 AND c.seen=false AND c.deleted_at IS NULL

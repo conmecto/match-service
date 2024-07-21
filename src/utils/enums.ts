@@ -145,8 +145,6 @@ export enum FieldsDbName {
     'updated_at' = 'updatedAt',
     'currentQueue' = 'current_queue',
     'current_queue' = 'currentQueue',
-    'location_access' = 'locationAccess',
-    'locationAccess' = 'location_access',
     'country' = 'country',
     'geohash' = 'geohash',
     'lat' = 'lat',

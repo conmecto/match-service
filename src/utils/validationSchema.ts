@@ -53,9 +53,8 @@ const reportChatSchema = Joi.object({
 });
 
 const updateUserLocationSchema = Joi.object({
-    lat: Joi.number().min(-90).max(90).required(),
-    long: Joi.number().min(-180).max(180).required(),
-    locationAccess: Joi.string().valid(...Object.values(LocationAccess)).optional(),
+    latitude: Joi.number().min(-90).max(90).required(),
+    longitude: Joi.number().min(-180).max(180).required()
 });
 
 export { 

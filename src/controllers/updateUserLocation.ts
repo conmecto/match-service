@@ -11,12 +11,9 @@ const updateUserLocation = async (req: interfaces.IRequestObject) => {
     if (Number(user.userId) !== Number(userId)) {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
-    const { lat, long, locationAccess } = req.body;
+    const { latitude: lat, longitude: long } = req.body;
     const geohash = await updateUserGeohashCache({ userId, lat, long });
     const updateObj: interfaces.IUpdateUserGeohash = { lat, long };
-    if (locationAccess) {
-        updateObj.locationAccess = locationAccess;
-    }
     if (geohash) {
         updateObj.geohash = geohash;
     }
