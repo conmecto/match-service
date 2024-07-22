@@ -8,8 +8,9 @@ import generateSignedUrl from './generateSignedUrl';
 import reportChat from './reportChat';
 import getUserMatchesSummary from './getUserMatchesSummary';
 import updateUserLocation from './updateUserLocation';
+import updateUserMatchSeen from './updateUserMatchSeen';
 
 export { 
     getUserSettings, updateUserSettings, getUserChats, endMatch, markChatsRead, 
-    getUserMatches, generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation
+    getUserMatches, generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation, updateUserMatchSeen
 }

@@ -57,8 +57,13 @@ const updateUserLocationSchema = Joi.object({
     longitude: Joi.number().min(-180).max(180).required()
 });
 
+const matchSeenSchema = Joi.object({
+    matchId: Joi.number().required(),
+    userId: Joi.number().required()
+})
+
 export { 
     paramsUserIdSchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
     paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema,
-    generateUploadUrlSchema, reportChatSchema, updateUserLocationSchema
+    generateUploadUrlSchema, reportChatSchema, updateUserLocationSchema, matchSeenSchema
 };

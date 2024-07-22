@@ -54,22 +54,6 @@ interface ICreateLocationSettingObject {
     userId: number
 }
 
-interface IGetSettingObject {
-    id: number,
-    userId: number,
-    age?: number,
-    city?: string,
-    country?: string, 
-    searchFor: string,
-    gender?: string,
-    minSearchAge: number,
-    maxSearchAge: number,
-    currentQueue?: number,
-    activeMatchesCount?: number,
-    maxMatchesAllowed?: number,
-    isMatched?: boolean
-}
-
 //Match
 interface IGetMatchObj {
     id: number,
@@ -77,18 +61,22 @@ interface IGetMatchObj {
     userId2: number,
     score: number,
     createdAt: Date,
-    city?: string,
     country?: string,
 }
 
-interface IGetMatchObjWithSetting {
-    id?: number,
-    userId1?: number,
-    userId2?: number,
-    score?: number,
-    createdAt?: Date,
-    city?: string,
-    country?: string,
+interface IGetMatchDbResponse {
+    id: number,
+    userId1: number,
+    userId2: number,
+    score: number,
+    createdAt: Date,
+    country: string,
+    chatId?: number,
+    user1MatchSeenAt?: Date,
+    user2MatchSeenAt?: Date
+}
+
+interface IGetMatchListObj extends IGetMatchDbResponse {
     chatNotification: boolean
 }
 
@@ -194,7 +182,7 @@ interface IUpdateUserGeohashCache extends IUpdateUserGeohash {
 
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
-    IGetSettingObject, IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
-    ICustomerRequest, IGetMatchObjWithSetting, IGenerateUploadUrlBody, IUserMatchSummaryObj, IGetUserMatchSettingObject,
-    ICreateLocationSettingObject, IUpdateLocationSetting, IUpdateUserGeohash, IUpdateUserGeohashCache
+    IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
+    ICustomerRequest, IGetMatchDbResponse, IGenerateUploadUrlBody, IUserMatchSummaryObj, IGetUserMatchSettingObject,
+    ICreateLocationSettingObject, IUpdateLocationSetting, IUpdateUserGeohash, IUpdateUserGeohashCache, IGetMatchListObj
 };

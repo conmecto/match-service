@@ -19,6 +19,7 @@ import reportChatMessage from './reportChatMessage';
 import userMatchesSummary from './userMatchesSummary';
 import { updateUserGeohashCache, encodeGeoLocation } from './geohash';
 import updateLocationSetting from './updateLocationSetting';
+import markMatchSeen from './markMatchSeen';
 
 export {
     CustomError,
@@ -42,5 +43,6 @@ export {
     userMatchesSummary,
     updateUserGeohashCache,
     updateLocationSetting,
-    encodeGeoLocation
+    encodeGeoLocation,
+    markMatchSeen
 }

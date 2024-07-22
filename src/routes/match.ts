@@ -2,7 +2,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
 import { 
     getUserSettings, updateUserSettings, getUserChats, endMatch, markChatsRead, getUserMatches, 
-    generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation
+    generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation, updateUserMatchSeen
 } from '../controllers';
 import { authenticateRequest } from '../middlewares';
 
@@ -78,16 +78,6 @@ matchRouter.put('/:matchId/chats/read', authenticateRequest, async (req: Request
     }
 });
 
-matchRouter.put('/:matchId/end', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const filterRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await endMatch(filterRequest);
-        res.status(enums.StatusCodes.OK).send(controllerResponse);    
-    } catch(err) {
-        next(err);
-    }
-});
-
 matchRouter.post('/:matchId/chats/signed-url', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
@@ -102,6 +92,26 @@ matchRouter.put('/:matchId/chats/:chatId/report', authenticateRequest, async (re
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await reportChat(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
+matchRouter.put('/:matchId/end', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await endMatch(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
+matchRouter.put('/:matchId/users/:userId/seen', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await updateUserMatchSeen(filterRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);
