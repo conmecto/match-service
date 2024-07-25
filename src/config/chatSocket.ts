@@ -119,7 +119,7 @@ const createChatSocket = async (server: Server) => {
                         updatedAt: new Date(), 
                         deletedAt: null,
                         seen: false,
-                        location: fileData.location,
+                        location: fileData.key,
                         name: fileData.name,
                         mimetype: fileData.mimetype,
                         size: fileData.size, 
