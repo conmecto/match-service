@@ -1,7 +1,6 @@
 import CustomError from './customError';
 import { handleAddSettingsMessage } from './handleMessage';
 import handleMatchCreatedMessage from './handleMatchCreatedMessage';
-import * as cacheClient from './cache';
 import checkUserSetting from './checkUserSetting';
 import getMatchById from './getMatchById';
 import getUserMatchSetting from './getUserMatchSetting';
@@ -20,12 +19,16 @@ import userMatchesSummary from './userMatchesSummary';
 import { updateUserGeohashCache, encodeGeoLocation } from './geohash';
 import updateLocationSetting from './updateLocationSetting';
 import markMatchSeen from './markMatchSeen';
+import generateFromTextInput from './textGeneration';
+import addTextGenResponse from './addTextGenResponse';
+import checkTextGenerateLimit from './checkTextGenerateLimit';
+import * as cacheClient from './cache';
 
 export {
     CustomError,
+    cacheClient,
     handleAddSettingsMessage,
     handleMatchCreatedMessage,
-    cacheClient,
     checkUserSetting,
     getMatchById,
     getUserMatchSetting,
@@ -44,5 +47,8 @@ export {
     updateUserGeohashCache,
     updateLocationSetting,
     encodeGeoLocation,
-    markMatchSeen
+    markMatchSeen,
+    generateFromTextInput,
+    addTextGenResponse,
+    checkTextGenerateLimit
 }
