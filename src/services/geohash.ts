@@ -1,5 +1,6 @@
 import logger from './logger';
-import { getKey, cacheClient } from './cache';
+import { getKey } from './cache';
+import { redisClient1 } from '../config';
 import { interfaces } from '../utils';
 
 const base32 = '0123456789bcdefghjkmnpqrstuvwxyz';
@@ -50,7 +51,7 @@ const updateUserGeohashCache = async ({ userId, lat, long, geohash }: interfaces
     const key = userId + ':geohash';
     const oldGeohash = await getKey(key);
     if (geohash) {
-        const client = await cacheClient.MULTI();
+        const client = await redisClient1.MULTI();
         client.SADD(geohash, userId?.toString());
         if (oldGeohash) {
             client.SREM(oldGeohash, userId?.toString());

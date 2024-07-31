@@ -56,5 +56,15 @@ export default {
     token: {
         publicKey: process.env.TOKEN_PUBLIC_KEY || 'TEMP_PUBLIC_KEY'
     },
+    google: {
+        model: process.env.GOOGLE_API_MODEL || '',
+        project: process.env.GOOGLE_PROJECT_ID || '',
+        location: process.env.GOOGLE_API_LOCATION || '',
+        type: process.env.GOOGLE_API_AUTH_TYPE || '',
+        clientId: process.env.GOOGLE_API_CLIENT_ID || '',
+        clientSecret: process.env.GOOGLE_API_CLIENT_SECRET || '',
+        refreshToken: process.env.GOOGLE_API_REFRESH_TOKEN || '',
+        universeDomain: process.env.GOOGLE_API_UNIVERSE_DOMAIN || '',
+    },
     email: process.env.email || 'temp email'
 };
