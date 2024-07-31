@@ -60,10 +60,21 @@ const updateUserLocationSchema = Joi.object({
 const matchSeenSchema = Joi.object({
     matchId: Joi.number().required(),
     userId: Joi.number().required()
+});
+
+const genMessageSchema = Joi.object({
+    userId: Joi.number().required(),
+    context: Joi.string().required()
+});
+
+const genMessageResponseSchema = Joi.object({
+    userId: Joi.number().required(),
+    jobId: Joi.number().required()
 })
 
 export { 
     paramsUserIdSchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
     paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema,
-    generateUploadUrlSchema, reportChatSchema, updateUserLocationSchema, matchSeenSchema
+    generateUploadUrlSchema, reportChatSchema, updateUserLocationSchema, matchSeenSchema,
+    genMessageSchema, genMessageResponseSchema
 };

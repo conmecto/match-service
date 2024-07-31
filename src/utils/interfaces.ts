@@ -180,9 +180,18 @@ interface IUpdateUserGeohashCache extends IUpdateUserGeohash {
     userId: number
 }
 
+interface ITextGenObj {
+    userId: number,
+    context: string, 
+    response: string, 
+    inputTokenCount: number, 
+    outputTokenCount: number
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
     IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
     ICustomerRequest, IGetMatchDbResponse, IGenerateUploadUrlBody, IUserMatchSummaryObj, IGetUserMatchSettingObject,
-    ICreateLocationSettingObject, IUpdateLocationSetting, IUpdateUserGeohash, IUpdateUserGeohashCache, IGetMatchListObj
+    ICreateLocationSettingObject, IUpdateLocationSetting, IUpdateUserGeohash, IUpdateUserGeohashCache, IGetMatchListObj,
+    ITextGenObj
 };
