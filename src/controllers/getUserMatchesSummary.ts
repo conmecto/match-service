@@ -21,9 +21,12 @@ const getUserMatchesSummary = async (req: interfaces.IRequestObject) => {
     const avgMatchStreak = Math.floor((matchesScoreSum / matchesSummary.length) * 100) / 100;
     const matchesDurationSum = Math.floor(matchesSummary.reduce((prev, current) => prev + current.matchDurationHours, 0) / 24);
     const avgMatchDuration = Math.floor((matchesDurationSum / matchesSummary.length) * 100) / 100; 
+    const totalMatches = matchesSummary.length === 1 ? (
+        matchesSummary[0].matchId ? 1 : 0
+    ) : matchesSummary.length;
     return {
         currentMatches,
-        totalMatches: matchesSummary.length,
+        totalMatches,
         highestMatchStreak,
         conmectoScore: matchesSummary.length ? matchesSummary[0].totalMatchScore : 0,
         avgMatchStreak,
