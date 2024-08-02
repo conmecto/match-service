@@ -8,7 +8,7 @@ import {
 
 const generateMessage = async (req: interfaces.IRequestObject) => {
     const userId = Number(req.params.userId);
-    const context = req.query.context as string;
+    const context = req.body.context as string;
     await validationSchema.genMessageSchema.validateAsync({ userId, context });
     const user = req.user;
     if (!user) {
