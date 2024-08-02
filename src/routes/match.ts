@@ -3,7 +3,7 @@ import { requestUtils, enums } from '../utils';
 import { 
     getUserSettings, updateUserSettings, getUserChats, endMatch, markChatsRead, getUserMatches, 
     generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation, updateUserMatchSeen,
-    genMessageJobResponse, generateMessage
+    genMessageJobResponse, generateMessage, getGenMessageSetting, getAllGenMessages
 } from '../controllers';
 import { authenticateRequest } from '../middlewares';
 
@@ -53,6 +53,26 @@ matchRouter.get('/users/:userId/summary', authenticateRequest, async (req: Reque
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserMatchesSummary(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
+matchRouter.get('/users/:userId/gen-message/setting', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await getGenMessageSetting(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
+matchRouter.get('/users/:userId/gen-message/all', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await getAllGenMessages(filterRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);

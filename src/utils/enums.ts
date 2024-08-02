@@ -51,6 +51,7 @@ export enum Errors {
     CITY_NOT_FOUND = 'City not found',
     USER_NOT_FOUND = 'User not found',
     MATCH_NOT_FOUND = 'Match not found',
+    TEXT_GEN_SETTING_NOT_FOUND = 'Text gen setting not found',
     JOB_NOT_FOUND = 'Job not found',
 
     USER_MATCH_SETTING_NOT_FOUND = 'User match settings not found',
@@ -74,6 +75,7 @@ export enum ErrorCodes {
     SETTING_NOT_FOUND = 'SETTING_NOT_FOUND',
     MATCH_NOT_FOUND = 'MATCH_NOT_FOUND',
     JOB_NOT_FOUND = 'JOB_NOT_FOUND',
+    TEXT_GEN_SETTING_NOT_FOUND = 'TEXT_GEN_SETTING_NOT_FOUND',
 
     INVALID_AGE_LIMIT_SETTING = 'INVALID_AGE_LIMIT_SETTING',
 

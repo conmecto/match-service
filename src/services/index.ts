@@ -23,6 +23,8 @@ import generateFromTextInput from './textGeneration';
 import addTextGenResponse from './addTextGenResponse';
 import checkTextGenerateLimit from './checkTextGenerateLimit';
 import * as cacheClient from './cache';
+import getTextGenSetting from './getTextGenSetting';
+import getGenMessages from './getGenMessages';
 
 export {
     CustomError,
@@ -50,5 +52,7 @@ export {
     markMatchSeen,
     generateFromTextInput,
     addTextGenResponse,
-    checkTextGenerateLimit
+    checkTextGenerateLimit,
+    getTextGenSetting,
+    getGenMessages
 }

@@ -11,9 +11,11 @@ import updateUserLocation from './updateUserLocation';
 import updateUserMatchSeen from './updateUserMatchSeen';
 import genMessageJobResponse from './genMessageJobResponse';
 import { genTextWorker, generateMessage } from './generateMessage';
+import getGenMessageSetting from './getGenMessageSetting';
+import getAllGenMessages from './getAllGenMessages';
 
 export { 
     getUserSettings, updateUserSettings, getUserChats, endMatch, markChatsRead, getUserMatches, 
     generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation, updateUserMatchSeen,
-    genMessageJobResponse, genTextWorker, generateMessage
+    genMessageJobResponse, genTextWorker, generateMessage, getGenMessageSetting, getAllGenMessages
 }
