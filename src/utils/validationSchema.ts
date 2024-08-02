@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { LocationAccess, SearchFor, SearchArea } from './enums';
+import { SearchFor, SearchArea } from './enums';
 import { ALLOWED_IMAGE_TYPES } from './constants';
 
 const paramsUserIdSchema = Joi.object({
@@ -70,11 +70,16 @@ const genMessageSchema = Joi.object({
 const genMessageResponseSchema = Joi.object({
     userId: Joi.number().required(),
     jobId: Joi.number().required()
-})
+});
+
+const queryParamsGenMessagesSchema = Joi.object({
+    userId: Joi.number().required(),
+    page: Joi.number().required().min(1)
+});
 
 export { 
     paramsUserIdSchema, paramsUserMatchSettingSchema, updateUserMatchSettingSchema,
     paramsMatchIdSchema, queryParamsUserChatsSchema, endMatchSchema, markChatsReadSchema,
     generateUploadUrlSchema, reportChatSchema, updateUserLocationSchema, matchSeenSchema,
-    genMessageSchema, genMessageResponseSchema
+    genMessageSchema, genMessageResponseSchema, queryParamsGenMessagesSchema
 };

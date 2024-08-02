@@ -188,10 +188,24 @@ interface ITextGenObj {
     outputTokenCount: number
 }
 
+interface ITextGenSettingObj {
+    current: number,
+    max: number, 
+    lastResetAt: Date,
+    isWaitingPeriod: boolean
+}
+
+interface ITextGenResponseObj {
+    id: number,
+    context: string, 
+    response: string,
+    hasMore: boolean
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
     IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
     ICustomerRequest, IGetMatchDbResponse, IGenerateUploadUrlBody, IUserMatchSummaryObj, IGetUserMatchSettingObject,
     ICreateLocationSettingObject, IUpdateLocationSetting, IUpdateUserGeohash, IUpdateUserGeohashCache, IGetMatchListObj,
-    ITextGenObj
+    ITextGenObj, ITextGenSettingObj, ITextGenResponseObj
 };
