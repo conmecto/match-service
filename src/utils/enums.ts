@@ -1,5 +1,5 @@
 export enum Country {
-    INDIA = 'india'
+    INDIA = 'in'
 }
 
 export enum Gender {
@@ -95,8 +95,6 @@ export enum PrefixesForLogs {
     REDIS_CONNECTION_READY_CLIENT2 = 'Redis client 2 is ready: ',
     REDIS_PUBLISH_CHANNEL_ERROR = 'Redis publish channel error: ',
     REDIS_SUBSCRIBE_CHANNEL_ERROR = 'Redis subscribe channel error: ',
-    REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR = 'Redis channel message receive error: ',
-    REDIS_ADD_USER_IN_MATCH_QUEUE_ERROR = 'Redis add user in match queue error: ',
     REDIS_PROCESS_MATCH_QUEUE_ERROR = 'Redis process match queue error: ',
     REDIS_HANDLE_MATCH_CREATED_ERROR = 'Redis handle match created error: ',
     REDIS_LOGGING_CHANNEL_ERROR = 'Redis logging channel error: ',
@@ -123,10 +121,6 @@ export enum PrefixesForLogs {
     AWS_GENERATE_UPLOAD_URL_ERROR = 'AWS generate upload url error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: '
-}
-
-export enum Messages {
-    MATCH_QUEUE_UPDATED = 'Match queue updated',
 }
 
 export enum SocketEvents {

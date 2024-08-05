@@ -1,11 +1,9 @@
 import CustomError from './customError';
-import { handleAddSettingsMessage } from './handleMessage';
 import handleMatchCreatedMessage from './handleMatchCreatedMessage';
 import checkUserSetting from './checkUserSetting';
 import getMatchById from './getMatchById';
 import getUserMatchSetting from './getUserMatchSetting';
 import updateMatchSettings from './updateMatchSettings';
-import addUserInMatchQueue from './addUserInMatchQueue';
 import getChats from './getChats';
 import markMatchEnded from './markMatchEnded';
 import updateSettingPostEndMatch from './updateSettingPostEndMatch';
@@ -29,13 +27,11 @@ import getGenMessages from './getGenMessages';
 export {
     CustomError,
     cacheClient,
-    handleAddSettingsMessage,
     handleMatchCreatedMessage,
     checkUserSetting,
     getMatchById,
     getUserMatchSetting,
     updateMatchSettings,
-    addUserInMatchQueue,
     getChats,
     markMatchEnded,
     updateSettingPostEndMatch,
