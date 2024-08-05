@@ -39,21 +39,6 @@ interface ICityObject {
     country?: string
 }
 
-//Setting
-interface ICreateSettingObject {
-    userId: number,
-    age: number,
-    searchFor: string,
-    gender: string,
-    minSearchAge: number,
-    maxSearchAge: number
-}
-
-interface ICreateLocationSettingObject {
-    country: string, 
-    userId: number
-}
-
 //Match
 interface IGetMatchObj {
     id: number,
@@ -203,9 +188,9 @@ interface ITextGenResponseObj {
 }
 
 export { 
-    IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateSettingObject, IGetMatchObj, ICreateChatRoomObj, 
+    IGeneric, IRequestObject, IGenericResponse, ICityObject, IGetMatchObj, ICreateChatRoomObj, 
     IUpdateSettingObj, IChatsResponse, IGetChatsPayload, IEndMatchRes, ITokenVerifyResponse,
     ICustomerRequest, IGetMatchDbResponse, IGenerateUploadUrlBody, IUserMatchSummaryObj, IGetUserMatchSettingObject,
-    ICreateLocationSettingObject, IUpdateLocationSetting, IUpdateUserGeohash, IUpdateUserGeohashCache, IGetMatchListObj,
+    IUpdateLocationSetting, IUpdateUserGeohash, IUpdateUserGeohashCache, IGetMatchListObj,
     ITextGenObj, ITextGenSettingObj, ITextGenResponseObj
 };
