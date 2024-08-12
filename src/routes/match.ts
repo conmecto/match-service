@@ -9,6 +9,14 @@ import { authenticateRequest } from '../middlewares';
 
 const matchRouter = Router();
 
+matchRouter.get('/check', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.status(enums.StatusCodes.OK).send('Okay');
+    } catch(err) {
+        next(err);
+    }
+});
+
 matchRouter.get('/setting/:userId', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filterRequest = await requestUtils.filterRequest(req);
