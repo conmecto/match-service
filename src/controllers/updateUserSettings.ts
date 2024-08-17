@@ -11,10 +11,13 @@ const updateUserSettings = async (req: interfaces.IRequestObject) => {
     if (Number(user.userId) !== Number(userId)) {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
-    const { minSearchAge, maxSearchAge, searchFor, searchArea } = req.body;
+    const { minSearchAge, maxSearchAge, searchFor, searchArea, gender } = req.body;
     const updateObj: interfaces.IUpdateSettingObj = {};
     if (searchFor) {
         updateObj.searchFor = searchFor?.toLowerCase();
+    }
+    if (gender) {
+        updateObj.gender = gender?.toLowerCase();
     }
     if ((minSearchAge && !maxSearchAge) || (maxSearchAge && !minSearchAge)) {
         throw new CustomError(

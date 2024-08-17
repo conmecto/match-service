@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { SearchFor, SearchArea } from './enums';
+import { SearchFor, SearchArea, Gender } from './enums';
 import { ALLOWED_IMAGE_TYPES } from './constants';
 
 const paramsUserIdSchema = Joi.object({
@@ -14,7 +14,8 @@ const updateUserMatchSettingSchema = Joi.object({
     minSearchAge: Joi.number().optional().min(18).max(69),
     maxSearchAge: Joi.number().optional().max(70).min(19),
     searchFor: Joi.string().valid(...Object.values(SearchFor)).optional(),
-    searchArea: Joi.string().valid(...Object.values(SearchArea)).optional()
+    searchArea: Joi.string().valid(...Object.values(SearchArea)).optional(),
+    gender: Joi.string().valid(...Object.values(Gender)).optional(),
 }).min(1);
 
 const paramsMatchIdSchema = Joi.object({

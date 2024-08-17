@@ -152,7 +152,8 @@ export enum FieldsDbName {
     'lat' = 'lat',
     'long' = 'long',
     'search_area' = 'searchArea',
-    'searchArea' = 'search_area'
+    'searchArea' = 'search_area',
+    'gender' = 'gender'
 }
 
 export enum ChatSocketEvents {
