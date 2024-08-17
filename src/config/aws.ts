@@ -1,5 +1,5 @@
-import { S3Client, CreateBucketCommand, HeadBucketCommand, PutPublicAccessBlockCommand, BucketLocationConstraint } from '@aws-sdk/client-s3';
-import { createPresignedPost, PresignedPostOptions } from '@aws-sdk/s3-presigned-post';
+import { S3Client, CreateBucketCommand, HeadBucketCommand, PutPublicAccessBlockCommand, BucketLocationConstraint, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Environments, enums, constants, interfaces } from '../utils';
 import { logger } from '../services';
 
@@ -68,30 +68,14 @@ const generatePresignedUploadUrl = async ({ matchId, userId, fileName, contentTy
     try {
         const Bucket = Environments.aws.s3BucketChat;
         const Key = 'match/' + matchId + '/user/' + userId + '/' + fileName;
-        const Conditions: Record<string, any>[] = [
-            { 
-                acl: 'public-read' 
-            }, 
-            { 
-                bucket: Bucket 
-            }, 
-            ['starts-with', '$key', Key],
-            ['starts-with', '$Content-Type', contentType],
-            ['content-length-range', constants.AWS_PRESIGNED_URL_MIN_SIZE_BYTES, constants.AWS_PRESIGNED_URL_MAX_SIZE_BYTES]
-        ];
-        const Fields = {
-            acl: 'public-read',
-
-        };
-        const postOptions: PresignedPostOptions = {
+        const command = new PutObjectCommand({
             Bucket,
             Key,
-            Conditions,
-            Fields,
-            Expires: constants.AWS_PRESIGNED_URL_TIMEOUT_SEC
-        };
-        const { url, fields } = await createPresignedPost(s3Client, postOptions);
-        return { url, fields };
+            ACL: 'public-read',
+            ContentType: contentType
+        });
+        const url = await getSignedUrl(s3Client, command, { expiresIn: constants.AWS_PRESIGNED_URL_TIMEOUT_SEC });
+        return url;
     } catch(error: any) {
         const errorString = JSON.stringify({
             stack: error?.stack,

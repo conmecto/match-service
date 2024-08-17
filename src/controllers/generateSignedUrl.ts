@@ -22,7 +22,7 @@ const generateSignedUrl = async (req: interfaces.IRequestObject) => {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
     return {
-        ...generateRes
+        url: generateRes
     };
 }
 
