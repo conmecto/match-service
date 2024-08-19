@@ -131,7 +131,7 @@ matchRouter.post('/:matchId/chats/signed-url', authenticateRequest, async (req: 
     try {
         const filterRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await generateSignedUrl(filterRequest);
-        res.status(enums.StatusCodes.CREATED).send(controllerResponse);    
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);
     }
