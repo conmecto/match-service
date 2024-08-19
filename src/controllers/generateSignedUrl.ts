@@ -14,13 +14,11 @@ const generateSignedUrl = async (req: interfaces.IRequestObject) => {
     if (Number(user.userId) !== userId) {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
-    const [generateRes, res] = await Promise.all([
-        generatePresignedUploadUrl({ matchId, userId, fileName, contentType }),
-        addUploadUrlRequest(userId, matchId)
-    ]);
+    const generateRes = await generatePresignedUploadUrl({ matchId, userId, fileName, contentType });
     if (!generateRes) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
+    await addUploadUrlRequest(userId, matchId);
     return {
         url: generateRes
     };
