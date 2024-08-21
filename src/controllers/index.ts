@@ -13,9 +13,11 @@ import genMessageJobResponse from './genMessageJobResponse';
 import { genTextWorker, generateMessage } from './generateMessage';
 import getGenMessageSetting from './getGenMessageSetting';
 import getAllGenMessages from './getAllGenMessages';
+import getConmectoScore from './getConmectoScore';
 
 export { 
     getUserSettings, updateUserSettings, getUserChats, endMatch, markChatsRead, getUserMatches, 
     generateSignedUrl, reportChat, getUserMatchesSummary, updateUserLocation, updateUserMatchSeen,
-    genMessageJobResponse, genTextWorker, generateMessage, getGenMessageSetting, getAllGenMessages
+    genMessageJobResponse, genTextWorker, generateMessage, getGenMessageSetting, getAllGenMessages,
+    getConmectoScore
 }
