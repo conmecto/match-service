@@ -23,6 +23,7 @@ import checkTextGenerateLimit from './checkTextGenerateLimit';
 import * as cacheClient from './cache';
 import getTextGenSetting from './getTextGenSetting';
 import getGenMessages from './getGenMessages';
+import getUserConmectoScore from './getUserConmectoScore';
 
 export {
     CustomError,
@@ -50,5 +51,6 @@ export {
     addTextGenResponse,
     checkTextGenerateLimit,
     getTextGenSetting,
-    getGenMessages
+    getGenMessages,
+    getUserConmectoScore
 }
