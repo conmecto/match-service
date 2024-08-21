@@ -52,10 +52,10 @@ const updateUserGeohashCache = async ({ userId, lat, long, geohash }: interfaces
     const oldGeohash = await getKey(key);
     if (geohash) {
         const client = await redisClient1.MULTI();
-        client.SADD(geohash, userId?.toString());
         if (oldGeohash) {
             client.SREM(oldGeohash, userId?.toString());
         }
+        client.SADD(geohash, userId?.toString());
         client.set(key, geohash);
         await client.EXEC();
         return geohash;
