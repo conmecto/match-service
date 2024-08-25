@@ -17,12 +17,7 @@ const addTextGenResponse = async (textGenObj: interfaces.ITextGenObj) => {
             WHEN current < max THEN current + 1
             ELSE MOD(current+1, max)
         END,
-        last_reset_at =
-        CASE 
-            WHEN current=0 THEN NOW()
-            WHEN current=3 THEN NOW()
-            ELSE last_reset_at
-        END
+        last_reset_at = NOW()
         WHERE user_id=$1
     `;
     const params2 = [textGenObj.userId];
