@@ -1,5 +1,6 @@
-import { interfaces, validationSchema, enums } from '../utils';
-import { CustomError, updateMatchSettings } from '../services';
+import { interfaces, validationSchema, enums, helpers } from '../utils';
+import { CustomError, updateMatchSettings, checkDobUpdate } from '../services';
+import { updateDobQueue } from '../config';
 
 const updateUserSettings = async (req: interfaces.IRequestObject) => {
     await validationSchema.updateUserMatchSettingSchema.validateAsync(req.body);
@@ -11,8 +12,9 @@ const updateUserSettings = async (req: interfaces.IRequestObject) => {
     if (Number(user.userId) !== Number(userId)) {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
-    const { minSearchAge, maxSearchAge, searchFor, searchArea, gender } = req.body;
+    const { minSearchAge, maxSearchAge, searchFor, searchArea, gender, dob } = req.body;
     const updateObj: interfaces.IUpdateSettingObj = {};
+    let updatedDob = false;
     if (searchFor) {
         updateObj.searchFor = searchFor?.toLowerCase();
     }
@@ -37,9 +39,20 @@ const updateUserSettings = async (req: interfaces.IRequestObject) => {
         updateObj.maxSearchAge = maxSearchAge;
         updateObj.minSearchAge = minSearchAge;
     }
+    if (dob) {
+        await checkDobUpdate(userId);
+        updateObj.dob = dob;
+        const age = helpers.getAge(dob);
+        updateObj.maxSearchAge = age + (age < 70 ? 1 : 0); 
+        updateObj.minSearchAge = age + (age > 18 ? -1 : 0);
+        updatedDob = true;
+    }
     const userSettings = await updateMatchSettings(userId, updateObj, searchArea?.toLowerCase());
     if (!userSettings) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
+    }
+    if (updatedDob) {
+        await updateDobQueue.add('updateDob', { userId, dob });
     }
     return { id: userId, ...updateObj, ...(searchArea ? { searchArea } : {}) };
 }

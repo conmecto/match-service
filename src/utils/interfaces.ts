@@ -76,7 +76,8 @@ interface IUpdateSettingObj {
     minSearchAge?: number,
     maxSearchAge?: number,
     searchFor?: string,
-    gender?: string
+    gender?: string,
+    dob?: Date
 }
 
 interface IUpdateLocationSetting {
@@ -149,12 +150,13 @@ interface IGetUserMatchSettingObject {
     id: number,
     userId: number,
     searchFor: string,
-    minSearchAge: number,
-    maxSearchAge: number,
+    minSearchAge?: number,
+    maxSearchAge?: number,
     searchArea: string,
     geohash?: string,
     country: string,
-    gender: string
+    gender: string,
+    dob?: Date 
 }
 
 interface IUpdateUserGeohash {
