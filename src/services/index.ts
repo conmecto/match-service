@@ -1,6 +1,5 @@
 import CustomError from './customError';
 import handleMatchCreatedMessage from './handleMatchCreatedMessage';
-import checkUserSetting from './checkUserSetting';
 import getMatchById from './getMatchById';
 import getUserMatchSetting from './getUserMatchSetting';
 import updateMatchSettings from './updateMatchSettings';
@@ -24,12 +23,12 @@ import * as cacheClient from './cache';
 import getTextGenSetting from './getTextGenSetting';
 import getGenMessages from './getGenMessages';
 import getUserConmectoScore from './getUserConmectoScore';
+import checkDobUpdate from './checkDobUpdate';
 
 export {
     CustomError,
     cacheClient,
     handleMatchCreatedMessage,
-    checkUserSetting,
     getMatchById,
     getUserMatchSetting,
     updateMatchSettings,
@@ -52,5 +51,6 @@ export {
     checkTextGenerateLimit,
     getTextGenSetting,
     getGenMessages,
-    getUserConmectoScore
+    getUserConmectoScore,
+    checkDobUpdate
 }

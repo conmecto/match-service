@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { SearchFor, SearchArea, Gender } from './enums';
-import { ALLOWED_IMAGE_TYPES } from './constants';
+import { ALLOWED_IMAGE_TYPES, PAST_DATE_18_YEARS_MILLIS } from './constants';
 
 const paramsUserIdSchema = Joi.object({
     userId: Joi.number().required()
@@ -16,6 +16,7 @@ const updateUserMatchSettingSchema = Joi.object({
     searchFor: Joi.string().valid(...Object.values(SearchFor)).optional(),
     searchArea: Joi.string().valid(...Object.values(SearchArea)).optional(),
     gender: Joi.string().valid(...Object.values(Gender)).optional(),
+    dob: Joi.date().optional().less(PAST_DATE_18_YEARS_MILLIS),
 }).min(1);
 
 const paramsMatchIdSchema = Joi.object({
