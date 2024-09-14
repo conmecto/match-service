@@ -21,7 +21,7 @@ const generateFromTextInput = async (context: string) => {
         });
         const timeout = constants.GOOGLE_VERTEX_API_TIMEOUT_MILLIS;
         const generativeModel = vertexAI.getGenerativeModel({ model }, { timeout });
-        const prompt = `Context: *The user ${context}*. Generate a message to impress the user, within 100 tokens.`;
+        const prompt = `Context: *${context}*. Generate impressive response within 100 tokens.`;
         const resp = await generativeModel.generateContent(prompt); 
         const contentResponse = await resp.response;
         if (contentResponse?.candidates && contentResponse?.usageMetadata) {
